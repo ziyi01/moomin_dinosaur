@@ -73,6 +73,8 @@ tiend:	sw	$t0,0($a0)	# save updated result
 	jr	$ra		# return
 	nop
 
+# Assignment 3
+#
 # Parameters:
 #	$a0 = $s0 = Address of an area in memory, suitably large for the output from the time2string
 #	$a1 = $s1 = 16 LSB contains time-info, NBCD-coded of 4 bits for each number.
@@ -84,39 +86,36 @@ time2string:
 	PUSH $s2
 	PUSH $s3
 	
-	add $t4, $0, $a0
+	add $s0, $0, $a0 # move address
+	add $s1, $a1, $0 # move 16 LSB time-info
+	addi $s2, $0, 5 # i = 5, counter to decide placement
 	
-	add $s0, $0, $a0
-	add $s1, $a1, $0
-	addi $s2, $0, 5 # i = 5
-	
-	# end with a null(zero)-byte
-	add $s3, $s0, $s2
+	# add end with a null-byte
+	add $s3, $s0, $s2 # calculate placement, the address with an offset (original address + 5 places away)
 	sb $0, ($s3)
-	subi $s2, $s2, 1 # i = 4
+	
+	subi $s2, $s2, 1 # decrement i
 ascii_loop:
 	# fix arguments
 	add $a0, $s1, $0
 	jal hexasc
 	
-	# add to memory
-	add $t0, $v0, $0
+	# add number to memory
+	add $t0, $v0, $0 # move return value (ascii-code)
 	add $s3, $s0, $s2 # calculate placement 
 	sb $t0, ($s3)
 	
-	# Loop
 	# shift place
-	srl $s1, $s1, 4 # Shift to check the next number, skipped in colon so shouldn't matter
+	srl $s1, $s1, 4 # Shift to check the next number in time-info
 	
-	subi $s2, $s2, 1 # decrement i
+	# loop
 	addi $t0, $0, 2
 	addi $t1, $0, -1
-	beq $s2, $t0, colon # inefficient, everytime
-	nop # in case
-	bne $s2, $t1, ascii_loop # loop again, check for new number
-	nop
+	subi $s2, $s2, 1 # decrement i
+	beq $s2, $t0, colon # checks if it should add a colon
+	bne $s2, $t1, ascii_loop # check for new number, loop
 	
-	j end
+	j time2end
 colon:
 	# add colon to the memory address
 	add $t0, $0, 0x3A
@@ -125,7 +124,7 @@ colon:
 	
 	subi $s2, $s2, 1 # decrement i
 	j ascii_loop
-end:
+time2end:
 	POP $s3
 	POP $s2	
 	POP $s1
@@ -141,12 +140,11 @@ end:
 #	$a0 = input number where the 4 LSB specify a number
 #	$v0 = Return, an ASCII code
 hexasc:
-	add $t0, $a0, $0
-	sll $t0, $t0, 28 # only want the last byte/4 bits
-	add $t0, $t0, $0 # setting the rest of the register to 0
-	srl $t0, $t0, 28
+	add $t0, $a0, $0 # or use move here to copy
+	andi $t0, $t0, 0xF # remove all 1s except the ones at the end
+	# Alternative solution: Shift around, AL OT
 	
-	addi $t2, $0, 0xA	
+	addi $t2, $0, 0xA # 0xA = 10, check if 0-9 or above 
 	blt $t0, $t2, number
 	
 	addi $v0, $t0, 0x37

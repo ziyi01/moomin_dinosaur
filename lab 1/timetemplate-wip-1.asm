@@ -165,36 +165,5 @@ hexa_end:
 #	$a0 = $s0 = int ms
 #	$s1 = int i	
 delay: 
-	PUSH $s0
-	PUSH $s1
-	move $s0, $a0
-	
-	sgt $t0, $s0, $0
-	bne $t0, $0, delay_loop
-	nop
-	
-	j delay_end
-	
-delay_while:
-	# ms = ms – 1;
-	subi $s0, $s0, 1
-	
-	# Executing the following for loop should take 1 ms
-	# for( i = 0; i < 4711; i = i + 1 ) /* The constant 4711 must be easy to change! */
-	addi $s1, $0, $0
-delay_for:
-	
-	# Do nothing.
-	
-	addi $s1, $s1, 1 # i + 1
-	sgt
-
-	# while( ms > 0 )
-	sgt $t0, $s0, $0
-	beq $t0, $0, delay_loop
-
-	POP $s0
 	jr $ra
 	nop
-
-delay_end

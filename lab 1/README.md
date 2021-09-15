@@ -21,6 +21,8 @@ $ra and $s0-2 are saved and then restored.
 ``$ra`` needs to be restored as we ``jal`` to the ``hexasc`` method which overwrites the return address and we need it to later jump back to main.
 ``$s0`` is saved
 
+[WIP please fill]
+
 - Which registers are used but not saved? Why are these not saved?
 
 All the $t registers and the $v ones as they are supposed to be "garbage" after using them. They are temporary registers used to store temporary values.

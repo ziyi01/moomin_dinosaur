@@ -5,7 +5,7 @@
 
 At the branch where they check to stop or not. So either the limit where they stop or the comparison with the value of $s0 if it's greater than $t0.
 
-## Assignment 2
+## Assignment 2 - hexasc
 - If the argument is 17, what is the return-value? Why?
 
 1, since `17` in decimal becomes `1 0001` in binary, which means that the first bit (which was worth 16) is ignored as the method only processes the **4 LSB**.
@@ -14,7 +14,7 @@ At the branch where they check to stop or not. So either the limit where they st
 
 We compare the 4 digits with `OxA` to see if they are "0-9" and then input the True/False (1/0) value into the branch (or directly use blt that is a pseudo instruction of this).
 
-## Assignment 3
+## Assignment 3 - time2string
 - Which registers are saved and restored by your subroutine? Why?
 
 $ra and $s0-2 are saved and then restored.
@@ -29,21 +29,21 @@ All the $t registers and the $v ones as they are supposed to be "garbage" after 
 
 line 89,90 and 96-101 adjusts the time-info, processes it and stores the byte at the assigned address.
 
-## Assignment 4
+## Assignment 4 - delay
 - If the argument value in register $a0 is zero, which instructions in your subroutine are executed? How many times each? Why?
 
+The comparison is run between the argument and $0 which branches to the end.
 
+- If the argument value in register $a0 is -1, which instructions in your subroutine are executed? How many times each? Why?
 
-- If the argument value in register $a0 is zero, which instructions in your subroutine are executed? How many times each? Why?
+Same thing as if the register was zer0
 
-
-
-## Assignment 6
+## Assignment 6 - make 
 - What is the effect of the assembler directive .global? Why is the directive particularly important in this assignment?
 
 Makes the subroutine (the one labeled) available to files outside of the one where it is defined.
 
-## Assignment 7
+## Assignment 7 - make install
 - When you move your code from the simulator to the lab-board, you have to change the value of the constant in the delay subroutine to get correct timing. Why?
 
 BECAUSE ITS A FUCKING CHIPKIT

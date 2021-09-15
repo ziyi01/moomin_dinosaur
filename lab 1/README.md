@@ -31,6 +31,8 @@ All the $t registers and the $v ones as they are supposed to be "garbage" after 
 
 line 89,90 and 96-101 adjusts the time-info, processes it and stores the byte at the assigned address.
 
+MIGHT NOT BE CORRECT? CUZ CHANGES
+
 ## Assignment 4 - delay
 - If the argument value in register $a0 is zero, which instructions in your subroutine are executed? How many times each? Why?
 

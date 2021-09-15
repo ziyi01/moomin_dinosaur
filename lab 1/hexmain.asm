@@ -4,7 +4,7 @@
 
 	.text
 main:
-	li	$a0,2		# change this to test different values
+	li	$a0,17		# change this to test different values
 
 	jal	hexasc		# call hexasc
 	nop			# delay slot filler (just in case)	
@@ -19,18 +19,16 @@ stop:	j	stop		# stop after one run
 
   # You can write your own code for hexasc here
 
-  # Written 2021-09-07 by Julia Wang
+  # Written 2021-09-15 by Julia Wang & Amanda Hallstedt
 
 # Inputs:
 #	$a0 = input number where the 4 LSB specify a number
 #	$v0 = Return, an ASCII code
 hexasc:
-	add $t0, $a0, $0 # or use move here to copy
-	sll $t0, $t0, 28 # only want the last byte/4 bits
-	move $t0, $t0 # setting the rest of the register to 0, alternatively use pseudo move
-	srl $t0, $t0, 28
+	move $t0, $a0 # move value
+	andi $t0, $t0, 0xF # remove all 1s except for the 4 last ones at the end
 	
-	addi $t2, $0, 0xA	
+	addi $t2, $0, 0xA # 0xA = 10, check if 0-9 or above 
 	blt $t0, $t2, number
 	
 	addi $v0, $t0, 0x37

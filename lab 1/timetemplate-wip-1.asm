@@ -1,7 +1,8 @@
   # timetemplate.asm
   # Written 2015 by F Lundevall
-  # Modified 2021-09-08 by Julia Wang
   # Copyright abandonded - this file is in the public domain.
+
+  # Modified 2021-09-08 by Julia Wang
 
 .macro	PUSH (%reg)
 	addi	$sp,$sp,-4

@@ -2,7 +2,7 @@
   # This file written 2015 by F Lundevall
   # Copyright abandoned - this file is in the public domain.
 
-  # Modified 2021-09-07 by Julia Wang
+  # Modified 2021-09-15 by Julia Wang & Amanda Hallstedt
 
 	.text
 main:
@@ -15,8 +15,8 @@ loop:
 
 	addi	$s0,$s0,3	# what happens if the constant is changed?
 	
-	li	$t0,0x5d	# simple solution is to calculate where it should stop if it increments 3 at a time, add two to make it divisible by 3
-	bne	$s0,$t0,loop
+	li	$t0,0x5b	
+	blt	$s0,$t0,loop	# if it surpasses the limit (of the hexcode of z) then it also stop
 	nop			# delay slot filler (just in case)
 
 stop:	j	stop		# loop forever here

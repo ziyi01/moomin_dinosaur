@@ -18,10 +18,16 @@ We compare the 4 digits with `OxA` to see if they are "0-9" and then input the T
 - Which registers are saved and restored by your subroutine? Why?
 
 $ra and $s0-2 are saved and then restored.
-``$ra`` needs to be restored as we ``jal`` to the ``hexasc`` method which overwrites the return address and we need it to later jump back to main.
-``$s0`` is saved
 
-[WIP please fill]
+``$ra`` needs to be restored as we ``jal`` to the ``hexasc`` method which overwrites the return address and we need it to later jump back to main.
+
+``$s0`` saves the argument of ``$a0`` (the address) as the register $a0 will be used in other subroutines and the address is used throughout the whole time2string.
+
+``$s1`` saves the argument of ``$a1`` (time-info) as the register $a1 might be used in another subroutine, we know it won't but it's not wrong to assume the opposite, and this time-info is used throughout the routine.
+
+``$s2`` is used as a counter to count the amount of times for the loop to run and also to calculate the placement of addresses throughout the routine which means it can't be overwritten and needs to be saved if another subroutine accesses the register.
+
+(Antar att det är det här de menar med saved and restored?)
 
 - Which registers are used but not saved? Why are these not saved?
 

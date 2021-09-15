@@ -12,12 +12,14 @@ At the branch where they check to stop or not. So either the limit where they st
 
 - If your solution contains a conditional-branch instruction: which input values cause the instruction to actually branch to another location?
 
-We compare the 4 digits with `OxA` to see if they are "0-9" and then input the T/F value into the branch (or directly use blt)
+We compare the 4 digits with `OxA` to see if they are "0-9" and then input the True/False (1/0) value into the branch (or directly use blt that is a pseudo instruction of this).
 
 ## Assignment 3
 - Which registers are saved and restored by your subroutine? Why?
 
-
+$ra and $s0-2 are saved and then restored.
+``$ra`` needs to be restored as we ``jal`` to the ``hexasc`` method which overwrites the return address and we need it to later jump back to main.
+``$s0`` is saved
 
 - Which registers are used but not saved? Why are these not saved?
 
@@ -25,6 +27,7 @@ All the $t registers and the $v ones as they are supposed to be "garbage" after 
 
 - Assume the time is 16:53. Which lines of your code handle the '5'? 
 
+line 89,90 and 96-101 adjusts the time-info, processes it and stores the byte at the assigned address.
 
 ## Assignment 4
 - If the argument value in register $a0 is zero, which instructions in your subroutine are executed? How many times each? Why?

@@ -1,6 +1,6 @@
   # timetemplate.asm
   # Written 2015 by F Lundevall
-  # Modified 2021-09-08 by Julia Wang
+  # Modified 2021-09-08 by Julia Wang and Amanda Hallstedt
   # Copyright abandonded - this file is in the public domain.
 
 .macro	PUSH (%reg)
@@ -94,7 +94,7 @@ time2string:
 	sb $0, 5($s0)
 ascii_loop:
 	# Fix arguments
-	add $a0, $s1, 0 # borde vara fine att sätta efter
+	add $a0, $s1, 0 # borde vara fine att sÃ¤tta efter
 	jal hexasc 
 	nop
 	
@@ -108,10 +108,10 @@ ascii_loop:
 	# Check if-loop
 	addi $t0, $0, 2
 	addi $t1, $0, -1
-	addi $s2, $s2, -1 # decrement i, no need for nop
-	beq $s2, $t0, colon
+	addi $s2, $s2, -1 # decrement counter for placement
+	beq $s2, $t0, colon  # check if colon space
 	nop
-	bne $s2, $t1, ascii_loop
+	bne $s2, $t1, ascii_loop # start over
 	nop
 time2end:
 	POP $s2
@@ -122,18 +122,12 @@ time2end:
 	nop
 colon:
 	# Add colon
-	add $t0, $0, 0x3A
+	add $t0, $0, 0x3A 
 	add $t1, $s0, $s2
 	sb $t0, ($t1)
-	addi $s2, $s2, -1 # decrement i
+	addi $s2, $s2, -1 # decrement counter for placement
 	j ascii_loop
 	nop
-
-  # you can write your code for subroutine "hexasc" below this line
-  #
-  # Written 2021-09-07 by Julia Wang
-
-# Assignment 2
 
 # Inputs:
 #	$a0 = input number where the 4 LSB specify a number
@@ -162,24 +156,23 @@ hexa_end:
 #	$t2 = int i	
 delay: 
 	PUSH $s0
-	move $s0, $a0 # move int ms to $s0
+	add $s0, $a0, $0 # move int ms to $s0
 delay_while:
 	# while( ms > 0 )
-	beq $s0, $0, delay_end
+	addi $t1, $0, 1
+	blt $s0, $t1, delay_end
 
 	add $t2, $0, $0 # i = 0
 # Executing the following for loop should take 1 ms
 delay_for:
-	# Do nothing.
-	
-	# i < 4711
-	addi $t0, $0, 4711 # change 4711 here
+	# i < end value 
+	addi $t0, $0, 6600 # change end value here (changed from original suggestion of 4711)
 	addi $t2, $t2, 1 # i + 1
 	bne $t2, $t0, delay_for
 	nop
 
 	# while( ms > 0 )
-	addi $s0, $s0, -1 # ms = ms – 1;
+	addi $s0, $s0, -1 # ms = ms â€“ 1;
 	j delay_while
 	nop
 delay_end:

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <stdbool.h>
 #define COLUMNS 6
 int placement = 0;
 
@@ -22,7 +22,7 @@ void print_sieves(int max){
   /*  initialized with 0s, 0s are prime and 1s aren't
       numbers[0] is the same as the number 2
   */
-  int* numbers = (int*)calloc(max-2, sizeof(int));
+  bool* numbers = (bool*)calloc(max-2, sizeof(bool));
 
   /* Sieve */
   for(int i = 0; i < max-2; i++) {

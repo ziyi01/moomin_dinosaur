@@ -1,39 +1,23 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int count = 0;
-
+char count = 0;
 char* text1 = "This is a string.";
 char* text2 = "Yet another thing.";
 
-/* 80 bytes are reserved per list, with 2 bytes aligned (padding) */
-int* list1;
+/* 80 bytes are reserved per list */
 int* list2;
+int* list1;
 
 /*
 
-
-Are the variables supposed to be named like this?
-
-Parameters:
-  $a0 = text1
-  $a1 = list1
-  $a2 = count
 */
-void copycodes(char* a0, int* a1, int a2){
-  int t0 = *a0 & 0xFF; /* Use AND-mask to get the LSB byte from $a0, lb, maybe should be a pointer instead???? */
-  
-  while(1) {
-    if(t0 == 0){ /* Branch if equal*/
-      return;
-    }
-
-    t0 = a1;
-    *a0 ++;
-    *a1 += 4;
-
-    int t1 = a2 & 0xFFFFFFFF; /* lw $t1, 0($a2)*/
-    t1 ++;
-    a2 = t1;
+void copycodes(char* text, int* list, char* count){
+  while(*text != 0) {
+    *list = *text;
+    list++;
+    text++;
+    (*count)++;
   }
 }
 
@@ -41,8 +25,11 @@ void copycodes(char* a0, int* a1, int a2){
 
 */
 void work(){
-  copycodes(text1, list1, count); /* Loads addresses through putting them as parameters in copycodes*/
-  copycodes(text2, list2, count);
+  list2 = (int*)calloc(80,sizeof(int));
+  list1 = (int*)calloc(80,sizeof(int));
+/* Loads addresses through putting pointers as parameters in copycodes*/
+  copycodes(text1, list1, &count); 
+  copycodes(text2, list2, &count);
 }
 
 void printlist(const int* lst){

@@ -25,8 +25,8 @@ void copycodes(char* text, int* list, char* count){
 
 */
 void work(){
-  list2 = (int*)calloc(80,sizeof(int));
-  list1 = (int*)calloc(80,sizeof(int));
+  list2 = (int*)calloc(20,sizeof(int)); // 20 * 4 = 80 bytes
+  list1 = (int*)calloc(20,sizeof(int));
 /* Loads addresses through putting pointers as parameters in copycodes*/
   copycodes(text1, list1, &count); 
   copycodes(text2, list2, &count);

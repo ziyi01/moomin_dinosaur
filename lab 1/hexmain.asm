@@ -4,7 +4,7 @@
 
 	.text
 main:
-	li	$a0,17		# change this to test different values
+	li	$a0,10		# change this to test different values
 
 	jal	hexasc		# call hexasc
 	nop			# delay slot filler (just in case)	

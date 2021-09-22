@@ -26,7 +26,7 @@ main:
 	syscall
 	nop
 	# wait a little
-	li	$a0,2
+	li	$a0,20
 	jal	delay
 	nop
 	# call tick
@@ -90,11 +90,18 @@ time2string:
 	add $s1, $a1, $0
 	addi $s2, $0, 4
 
+	# Check for nine
+	add $t0, $s1, $0 # move time-info
+	andi $t0, $t0, 15 # andi to remove the prior numbers
+	addi $t1, $0, 9 # to compare to
+	beq $t1, $t0, nine
+	nop # in case of panic
+
 	# Add end with a null-byte
 	sb $0, 5($s0)
 ascii_loop:
 	# Fix arguments
-	add $a0, $s1, 0 # borde vara fine att sätta efter
+	add $a0, $s1, 0
 	jal hexasc 
 	nop
 	
@@ -126,6 +133,27 @@ colon:
 	add $t1, $s0, $s2
 	sb $t0, ($t1)
 	addi $s2, $s2, -1 # decrement counter for placement
+	j ascii_loop
+	nop
+nine:
+	# Add end with a null-byte
+	sb $0, 8($s0)
+	
+	# sb all the letters
+	addi $t0, $0, 0x45 # E
+	addi $t1, $0, 0x4E # N
+	addi $t2, $0, 0x49 # I
+	addi $t3, $0, 0x4E # N
+	
+	sb $t0, 7($s0)
+	sb $t1, 6($s0)
+	sb $t2, 5($s0)
+	sb $t3, 4($s0)
+	
+	# shift to next number
+	srl $s1, $s1, 4
+	
+	addi $s2, $s2, -1 # decrement counter as the first "number" is placed
 	j ascii_loop
 	nop
 
@@ -161,18 +189,19 @@ delay_while:
 	# while( ms > 0 )
 	addi $t1, $0, 1
 	blt $s0, $t1, delay_end
+	nop
 
 	add $t2, $0, $0 # i = 0
 # Executing the following for loop should take 1 ms
 delay_for:
 	# i < end value 
-	addi $t0, $0, 4711 # change end value here (changed from original suggestion of 4711)
+	addi $t0, $0, 5000 # change end value here (changed from original suggestion of 4711)
 	addi $t2, $t2, 1 # i + 1
 	bne $t2, $t0, delay_for
 	nop
 
 	# while( ms > 0 )
-	addi $s0, $s0, -1 # ms = ms -1;
+	addi $s0, $s0, -1 # ms = ms – 1;
 	j delay_while
 	nop
 delay_end:

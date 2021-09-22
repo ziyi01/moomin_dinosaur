@@ -40,6 +40,13 @@ time2string:
 	add $s1, $a1, $0
 	addi $s2, $0, 4
 
+	# Check for nine
+	add $t0, $s1, $0 # move time-info
+	andi $t0, $t0, 15 # andi to remove the prior numbers
+	addi $t1, $0, 9 # to compare to
+	beq $t1, $t0, nine
+	nop # in case of panic
+
 	# Add end with a null-byte
 	sb $0, 5($s0)
 ascii_loop:
@@ -76,6 +83,27 @@ colon:
 	add $t1, $s0, $s2
 	sb $t0, ($t1)
 	addi $s2, $s2, -1 # decrement i
+	j ascii_loop
+	nop
+nine:
+	# Add end with a null-byte
+	sb $0, 8($s0)
+	
+	# sb all the letters
+	addi $t0, $0, 0x45 # E
+	addi $t1, $0, 0x4E # N
+	addi $t2, $0, 0x49 # I
+	addi $t3, $0, 0x4E # N
+	
+	sb $t0, 7($s0)
+	sb $t1, 6($s0)
+	sb $t2, 5($s0)
+	sb $t3, 4($s0)
+	
+	# shift to next number
+	srl $s1, $s1, 4
+	
+	addi $s2, $s2, -1 # decrement counter as the first "number" is placed
 	j ascii_loop
 	nop
 

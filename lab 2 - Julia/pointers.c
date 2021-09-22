@@ -6,8 +6,8 @@ char* text1 = "This is a string.";
 char* text2 = "Yet another thing.";
 
 /* 80 bytes are reserved per list */
-int* list2;
-int* list1;
+int* list2 = (int*)calloc(20,sizeof(int));  // 20 * 4 = 80 bytes
+int* list1 = (int*)calloc(20,sizeof(int));
 
 /*
 
@@ -25,8 +25,6 @@ void copycodes(char* text, int* list, char* count){
 
 */
 void work(){
-  list2 = (int*)calloc(20,sizeof(int)); // 20 * 4 = 80 bytes
-  list1 = (int*)calloc(20,sizeof(int));
 /* Loads addresses through putting pointers as parameters in copycodes*/
   copycodes(text1, list1, &count); 
   copycodes(text2, list2, &count);

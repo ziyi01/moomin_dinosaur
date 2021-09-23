@@ -99,7 +99,7 @@ fun: 9D001180
 
 main: 9D0011D8
 
-Both have high addresses as they are stored first on the Stack which grows from the top down. (?????????)
+KOLLA PIC32 GUIDE GREJEN
 
 ***Before the examination***
 

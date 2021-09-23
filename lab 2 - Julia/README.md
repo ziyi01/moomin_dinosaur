@@ -16,7 +16,7 @@ An extra global variable is added to keep count of the columns. ``int placement 
 
 - How did you represent the marking of 'prime' and 'not a prime' in the memory array?
 
-As an array is initialized with `0s` by default, I set it to represent that a number is either a prime number or not checked yet. So if ``numbers[5] == 0`` in the end of the program then it means that ``(5+2 =) 7`` is a prime number. And the reverse for `not a prime`.
+As an heap is initialized with `0s` by default (otherwise I need to fill the array), I set it to represent that a number is either a prime number or not checked yet. So if ``numbers[5] == 0`` in the end of the program then it means that ``(5+2 =) 7`` is a prime number. And the reverse for `not a prime`.
 
 - Which are the main steps in the algorithm? How have you implemented these steps?
 

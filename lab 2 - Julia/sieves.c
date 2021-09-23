@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define COLUMNS 6
 int placement = 0;
@@ -23,22 +24,24 @@ void print_sieves(int max){
       numbers[0] is the same as the number 2
   */
   int numbers[max-2];
+  memset(numbers,0,max-1);
 
   /* Sieve */
-  for(int i = 0; i < max-2; i++) {
+  for(int i = 0; i <= max-1; i++) {
     if(numbers[i] == 0) {
-      for(int j = i+1; j < max-2; j++) {
+      for(int j = i*i; j <= max-1; j++) {
         if((j+2) % (i+2) == 0) {
-          numbers[j] = 1;
+          numbers[j] = 1; // Can be more effective by adding an if statement to check if numbers[j] == 0 and then check if divisiable
         } 
       }
     }
   }
 
   for(int k = 0; k < max-2; k++) {
-    if(numbers[k] == 0) {
-      print_number(k+2);
-    }
+    printf("%d\t", numbers[k+2]);
+    //if(numbers[k] == 0) {
+      //print_number(k+2);
+    //}
   }
   printf("\n");
 }

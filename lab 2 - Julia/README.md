@@ -99,16 +99,35 @@ fun: ``0x9D001180``
 
 main: ``0x9D0011D8`` 
 
-Both are within the range of the program flash in the Virtual Memory Map which represents the space between ``0x1D000000`` and ``0x1D007FFF``.
+Both are within the range of the **Program flash** in the Virtual Memory Map which represents the space between ``0x9D000000`` and ``0x9D007FFF``.
+
+It only exists under the runtime and is deleted after???.
 
 ***Before the examination***
 
 - Which addresses are variables in and gv located at? Which memory sections according to the PIC32 memory map? Why?
 
+in: ``0xA0000008``
+
+gv: ``0xA000000C`` 
+
+In RAM, stores (global) variables indefinitely till the program is exited. Every "minnescell" is CAPABLE OF BEING DIRECTLY ACCESSED?!1111
+
 - Variables p and m are not global variables. Where are they allocated? Which memory section is used for these variables? Why are the address numbers for p and m much larger than for in and gv?
+
+p: ``0xA0003FE8``
+m: ``0xA0003FE4``
+
+In the reserved blocks for temporary memory.
 
 - At print statement AM5, what is the address of pointer p, what is the value of pointer p, and what value is pointer p pointing to?
 
+``0xA0003FE8`` and ``0xA0003FE4``, it's pointing at the temporary variable `m`.
+
 - At print statement AM7, what is the address of pointer p, what is the value of pointer p, and what value is pointer p pointing to?
 
+Same as the previous question, only the value of m has been adjusted not the pointer p.
+
 - Consider AM14 to AM17. Is the PIC32 processor using big-endian or little-endian? Why?
+
+Little-endian the LSB is at the right side, as it increments from the right bits as it increases in address.

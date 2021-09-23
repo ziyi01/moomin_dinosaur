@@ -95,11 +95,11 @@ It is 8 characters, and thus 8 bytes and ends with a null character, a zero-byte
 
 - Which addresses have `fun` and `main`? Which sections are they located in? What kind of memory are they stored in? What is the meaning of the data that these symbols points to? 
 
-fun: 9D001180
+fun: ``0x9D001180``
 
-main: 9D0011D8
+main: ``0x9D0011D8`` 
 
-KOLLA PIC32 GUIDE GREJEN
+Both are within the range of the program flash in the Virtual Memory Map which represents the space between ``0x1D000000`` and ``0x1D007FFF``.
 
 ***Before the examination***
 

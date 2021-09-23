@@ -22,11 +22,11 @@ void print_number(int n){
     }
 }
 
-/*  Uses Wilson's Theorem
+  /*  Uses Wilson's Theorem
     
     Parameter:
     int n = The number to check if prime
- */
+  */
 int is_prime(int n){
   long factmod = 1;
   if(n > 1) {

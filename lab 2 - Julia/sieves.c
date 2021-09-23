@@ -32,7 +32,7 @@ void print_sieves(int max){
       for(int j = i+1; j <= max-1; j++) {
         if(numbers[j] == 0) {
           if((j+2) % (i+2) == 0) {
-            numbers[j] = 1; // Can be more effective by adding an if statement to check if numbers[j] == 0 and then check if divisiable
+            numbers[j] = 1;
           } 
         }
       }

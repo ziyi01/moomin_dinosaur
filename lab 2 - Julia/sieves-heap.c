@@ -25,12 +25,14 @@ void print_sieves(int max){
   bool* numbers = (bool*)calloc(max-2, sizeof(bool));
 
   /* Sieve */
-  for(int i = 0; i < max-2; i++) {
+  for(int i = 0; i <= max-1; i++) {
     if(numbers[i] == 0) {
-      for(int j = i+1; j < max-2; j++) {
-        if((j+2) % (i+2) == 0) {
-          numbers[j] = 1;
-        } 
+      for(int j = i+1; j <= max-1; j++) {
+        if(numbers[j] == 0) {
+          if((j+2) % (i+2) == 0) {
+            numbers[j] = 1;
+          } 
+        }
       }
     }
   }

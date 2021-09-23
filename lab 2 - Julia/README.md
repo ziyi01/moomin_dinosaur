@@ -78,7 +78,9 @@ My code increments the count variable by inputting a pointer of the counter to `
 
 - Is your computer using big-endian or little-endian? How did you come to your conclusion? Is there any benefit of using either of the two alternatives?
 
-C uses little-endian. The benefit this brings is that it's easier to judge if a number is odd or even also it's easier to increase values. An example is if you add two numbers in a big-endian number all bits need to be moved up but for little-endian, the LSB stay and the new numbers are shifted to the right at a higher address instead. It's simpler to perform operations.
+C uses little-endian. This is seen as the counter is at 35 in decimal and becomes 0x23 in the endian experiment, (which means it goes 100011 in binary, 1 + 2 + 32) and is written in little-endian. 
+
+The benefit this brings is that it's easier to increase values. An example is if you add two numbers in a big-endian number all bits need to be moved up but for little-endian, the LSB stay and the new numbers are shifted to the right at a higher address(????) instead. It's simpler to perform operations.
 
 ## Assignment 5
 - Consider `AM18`, `AM19` and `AF1`. Explain why `gv` ends up with the incremented value, but `m` does not.

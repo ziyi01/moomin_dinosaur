@@ -42,8 +42,6 @@ int is_prime(int n){
     if(factmod == (n-1)) {
       return 1;
     }
-  } else if(n == 1) {
-    return 1;
   }
   return 0;
 }

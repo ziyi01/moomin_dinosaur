@@ -52,6 +52,7 @@ void print_sieves(int max){
         }
     }
     printf("\n");
+    free(prime);
 }
 
 // 'argc' contains the number of program arguments, and

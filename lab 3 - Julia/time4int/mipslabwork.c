@@ -56,7 +56,9 @@ void labinit( void )
   T2CONSET = 0x8000; // Start Timer2
 
   // Initialize Timer Interrupts, no need to change priority as it is only the Timer?
-  IECSET(0) = 0x00000100;
+  IECSET(0) = 0x00000100; // Timer Interrupts
+  IPC(2) = 4; // Priority of the Timer, page 53 in Family Data Sheet 
+  enable_interrupt; // Enables global interrupts, an assembly code
 }
 
 void tickLED(short* counter) {

@@ -24,6 +24,7 @@
 	.globl time2string
 	.globl delay
 	.globl led_test
+	.globl enable_interrupt
 	.text
 # Assignment 3
 #

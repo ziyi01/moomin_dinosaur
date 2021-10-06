@@ -13,10 +13,14 @@ They simultaneously update, the if statements registers if the buttons are press
 **TRISESET** 
 
 
-- In the generated assembly code, in which MIPS register will the return values from functions getbtns and getsw be placed in. You should be able to answer this question without debugging the generated assembly code.
+- In the generated assembly code, in which MIPS register will the return values from functions getbtns and getsw be placed in. You should be able to answer this question without debugging the generated assembly code. 
+
+Always in one of th v-registers. Since we only have one return value and 32 bits, it should return to v0. We compiled to double check, and it returned to $2 which according to mips reference sheet is v0.
 
 
 - In this exercise, we explained which bits that should be used in Port D and Port E. How can you find this information in the PIC32 and ChipKIT manuals? Be prepared to demonstrate how to find this information in the manuals. *Advice:* check the lecture slides from lecture 5 for ideas
+
+chipKIT™ Uno32™ Board Reference Manual sida 11-13
 
 
 ## Assignment 2

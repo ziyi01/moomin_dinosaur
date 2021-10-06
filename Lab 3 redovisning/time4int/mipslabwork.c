@@ -3,7 +3,7 @@
    This file written 2015 by F Lundevall
    Updated 2017-04-21 by F Lundevall
 
-   This file modified 2021-10-01 by Julia Wang
+   This file modified 2021-10-07 by Julia Wang
 
    For copyright and licensing, see file COPYING */
 
@@ -26,8 +26,9 @@ char textstring[] = "text, more text, and even more text!";
 /* Interrupt Service Routine */
 void user_isr( void ) // Goes here when interrupted and displays, resets and continues
 {
+  // Lab 3 - Assignment 3 d-f)
   timeoutcount++;
-  IFS(0) &= ~0x100; // Reset to 0
+  IFS(0) &= ~0x100; // Reset to 0 to handle the interrupt from Timer2
 
   if(timeoutcount == 10) {
     timeoutcount = 0;
@@ -41,38 +42,46 @@ void user_isr( void ) // Goes here when interrupted and displays, resets and con
 /* Lab-specific initialization goes here */
 void labinit( void )
 {
-  // Assignment 1 c)
-  int* trisE = (int*) 0xbf886100; // Probably doesn't need to be volatile as it is the direction which only needs to be adjusted once?
-  trisE[1] = 0xff; // Alternativt använd TRISESET, som ska i teori setta alla dessa till 0
+  // Lab 3 - Assignment 1 c)
+  // The 8 LSB are set as 0 to indicate it is output
+  int* trisE = (int*) 0xbf886100; // Doesn't need to be volatile as it is the direction which only needs to be initialized once
+  trisE[1] = 0xff; // TRISECLR should be 4 bytes(1 int place) away from TRISE start, only the marked bits should be cleared to 0
 
-  // Bits 5-11 till positiv
+  /// Lab 3 - Assignment 1 e)
+  // Set bits 11 to 5 as 1 which sets the switches and buttons as input
   TRISD |= 0xfe0;
+
+  // Lab 3 - Assignment 2 b)
+  // Initializes Timer2 to 100 ms
 
   // Prescaling: 80 * 10^6 / 256 * 10 = 31250 ticks/ 100 ms
   T2CON = 0x70; // Sets the prescaling and also sets the module off (to reset)
-  PR2 = PERIOD; // 31250 should be less than the max value of 16-bits
+  PR2 = PERIOD; // Sets the period, how many pulses (adjusted with prescaling) till timed-out
   TMR2 = 0; // Set Timer2 to 0
   T2CONSET = 0x8000; // Start Timer2
-
-  // Initialize Timer Interrupts, no need to change priority as it is only the Timer?
+  
+  // Lab 3 - Assignment 3 h)
+  // Initialize Timer Interrupts,
+  // should actually be no need to change priority as it is only the Timer
   IECSET(0) = 0x100; // Timer Interrupts
   IPC(2) = 4; // Priority of the Timer, page 53 in Family Data Sheet, 4 to 31 
-  enable_interrupt; // Enables global interrupts, an assembly code
+  enable_interrupt; // Enables global interrupts, an assembly routine 
 }
 
-void tickLED(short* counter) {
-  volatile int* led = (volatile int*) 0xbf886110; // PORTE
-  ++*counter;
-  *led = *counter;
-}
+/* Lab 3 - Assignment 1 h)
 
-// Assignment 1 h)
+  Uses getbtns() and getsw() from time4io to retrieve the status of
+  the Switches and Buttons 2-4 to update the time on display.
+
+*/
 void checkButton() {
   volatile int btns = (volatile int) getbtns();
+  if(btns == 0) return; // Return if nothing is registered
+  
   volatile int sw = (volatile int) getsw();
   volatile int newtime = 0;
 
-  if((btns & 0x1) == 1) { 
+  if((btns & 0x1) == 1) {  // Doesn't need == but easier to understand
     newtime += (sw << 4);    
     mytime = mytime & 0xff0f;
   } 
@@ -84,12 +93,13 @@ void checkButton() {
     newtime += (sw << 12);
     mytime &= 0x0fff; 
   }
-  mytime = mytime | newtime; // Everything occurs at the same time
+  mytime = mytime | newtime; // Update them at the same time
 }
 
 /* This function is called repetitively from the main program */
 void labwork( void )
 {
+  // Lab 3 - Assignment 3 c)
   prime = nextprime(prime);
   display_string(0, itoaconv(prime));
   display_update();

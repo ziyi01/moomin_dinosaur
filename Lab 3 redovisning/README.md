@@ -41,15 +41,16 @@ There would be no delay for the timer to tick and increment timercount all the t
 
 - If you press BTN3 quickly, does the time update reliably? Why, or why not? If not, would that be easy to change? If so, how?
 
-
+It does semi-reliably as it updates at the start of every labwork() independent to the time-out flag.
 
 ## Assignment 3
 - When the time-out event-flag is a "1", how does your code reset it to "0"?
 
+The ``user_isr`` function handles it and resets the flags once the global counter has counted to 10 (1 second delay).
 
 - What would happen if the time-out event-flag was not reset to "0" by your code? Why?
 
-The code would be stuck at the ``user_ISR`` event.
+The code would be stuck at the ``user_ISR`` event incrementing ``timeoutcount`` forever.
 
 - From which part of the code is the function ``user_isr`` called? Why is it called from there?
 
@@ -61,4 +62,4 @@ The callee-saved registers such as the s-registers are not saved as they are sup
 
 - Which device-register (or registers), and which processor-register (or registers) must be written to enable interrupts from the timer? Describe the functions of the relevant registers.
 
-The IEC and IPC-register is in the device which enables and sets the priority of Timer2. The processor register which is run through EI (rt?) sets the status of interrupts to enabled so that the Coprocessor (1?) will handle interrupts.
+The IEC and IPC-register is in the device which respective function is to enable interrupt for and sets the priority of Timer2. The processor register which is run through EI (rt?) sets the status of interrupts to enabled so that the Coprocessor (1?) will handle interrupts.

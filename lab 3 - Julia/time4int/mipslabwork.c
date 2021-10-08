@@ -56,7 +56,7 @@ void labinit( void )
 
   // Initialize Timer Interrupts, no need to change priority as it is only the Timer?
   IECSET(0) = 0x100; // Timer Interrupts
-  IPC(2) = 4; // Priority of the Timer, page 53 in Family Data Sheet, 4 to 31 
+  IPC(2) = 4; // Priority of the Timer, page 53 in Family Data Sheet
   enable_interrupt; // Enables global interrupts, an assembly code
 }
 

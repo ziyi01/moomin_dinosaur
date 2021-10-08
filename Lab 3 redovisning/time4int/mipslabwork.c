@@ -26,17 +26,24 @@ char textstring[] = "text, more text, and even more text!";
 /* Interrupt Service Routine */
 void user_isr( void ) // Goes here when interrupted and displays, resets and continues
 {
-  // Lab 3 - Assignment 3 d-f)
-  timeoutcount++;
-  IFS(0) &= ~0x100; // Reset to 0 to handle the interrupt from Timer2
+  if(IFS(0) &= 800) {
+    mytime += 0x3;
+    IFS(0) &= ~0x800;
+  }
 
-  if(timeoutcount == 10) {
-    timeoutcount = 0;
-    time2string(textstring, mytime);
-    display_string(3, textstring);
-    display_update();
-    tick(&mytime);
-  } 
+  if(IFS(0) &= 0x100) {
+  // Lab 3 - Assignment 3 d-f)
+    timeoutcount++;
+    IFS(0) &= ~0x100; // Reset to 0 to handle the interrupt from Timer2
+
+    if(timeoutcount == 10) {
+      timeoutcount = 0;
+      time2string(textstring, mytime);
+      display_string(3, textstring);
+      display_update();
+      tick(&mytime);
+    } 
+  }
 }
 
 /* Lab-specific initialization goes here */
@@ -57,43 +64,21 @@ void labinit( void )
   // Prescaling: 80 * 10^6 / 256 * 10 = 31250 ticks/ 100 ms
   T2CON = 0x70; // Sets the prescaling and also sets the module off (to reset)
   PR2 = PERIOD; // Sets the period, how many pulses (adjusted with prescaling) till timed-out
+  IFSCLR(0) = 0x100;
   TMR2 = 0; // Set Timer2 to 0
   T2CONSET = 0x8000; // Start Timer2
   
   // Lab 3 - Assignment 3 h)
   // Initialize Timer Interrupts,
   // should actually be no need to change priority as it is only the Timer
-  IECSET(0) = 0x100; // Timer Interrupts
-  IPC(2) = 4; // Priority of the Timer, page 53 in Family Data Sheet, 4 to 31 
-  enable_interrupt; // Enables global interrupts, an assembly routine 
-}
-
-/* Lab 3 - Assignment 1 h)
-
-  Uses getbtns() and getsw() from time4io to retrieve the status of
-  the Switches and Buttons 2-4 to update the time on display.
-
-*/
-void checkButton() {
-  volatile int btns = (volatile int) getbtns();
-  if(btns == 0) return; // Return if nothing is registered
-  
-  volatile int sw = (volatile int) getsw();
-  volatile int newtime = 0;
-
-  if((btns & 0x1) == 1) {  // Doesn't need == but easier to understand
-    newtime += (sw << 4);    
-    mytime = mytime & 0xff0f;
-  } 
-  if((btns & 0x2) == 2) {
-    newtime += (sw << 8);
-    mytime &= 0xf0ff; 
-  }
-  if((btns & 0x4) == 4) {
-    newtime += (sw << 12);
-    mytime &= 0x0fff; 
-  }
-  mytime = mytime | newtime; // Update them at the same time
+  IEC(0) |= 0x100; // Timer Interrupts
+  IPCSET(2) |= 0xC; // 1100, Priority of the Timer, page 53 and 90 in Family Data Sheet
+ 
+  // Surprise
+  INTCON = ~0xE; // Set INT2EP
+  IEC(0) |= 0x800; // 11th bit should activate the switch
+  IPCSET(2) |= 0x4000000; // 26th bit
+  enable_interrupt(); // Enables global interrupts, an assembly routine 
 }
 
 /* This function is called repetitively from the main program */

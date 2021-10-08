@@ -26,12 +26,14 @@ char textstring[] = "text, more text, and even more text!";
 /* Interrupt Service Routine */
 void user_isr( void ) // Goes here when interrupted and displays, resets and continues
 {
-  if(IFS(0) &= 800) {
-    mytime += 0x3;
+  if(IFS(0) & 0x800) {
     IFS(0) &= ~0x800;
+    tick(&mytime);
+    tick(&mytime);
+    tick(&mytime);
   }
 
-  if(IFS(0) &= 0x100) {
+  if(IFS(0) & 0x100) {
   // Lab 3 - Assignment 3 d-f)
     timeoutcount++;
     IFS(0) &= ~0x100; // Reset to 0 to handle the interrupt from Timer2
@@ -75,9 +77,9 @@ void labinit( void )
   IPCSET(2) |= 0xC; // 1100, Priority of the Timer, page 53 and 90 in Family Data Sheet
  
   // Surprise
-  INTCON = ~0xE; // Set INT2EP
+  INTCON = 0x2; // Set INT2EP
   IEC(0) |= 0x800; // 11th bit should activate the switch
-  IPCSET(2) |= 0x4000000; // 26th bit
+  //IPCSET(2) |= 0x4000000; // 26th bit
   enable_interrupt(); // Enables global interrupts, an assembly routine 
 }
 

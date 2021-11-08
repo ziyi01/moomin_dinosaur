@@ -130,14 +130,14 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <wire from="(990,350)" to="(990,400)"/>
     <wire from="(230,70)" to="(230,140)"/>
     <wire from="(720,290)" to="(770,290)"/>
-    <wire from="(1220,360)" to="(1260,360)"/>
+    <wire from="(1220,320)" to="(1260,320)"/>
     <wire from="(1220,280)" to="(1260,280)"/>
     <wire from="(1220,400)" to="(1260,400)"/>
     <wire from="(1220,240)" to="(1260,240)"/>
     <wire from="(1220,440)" to="(1260,440)"/>
-    <wire from="(1220,520)" to="(1260,520)"/>
     <wire from="(1220,480)" to="(1260,480)"/>
-    <wire from="(1220,320)" to="(1260,320)"/>
+    <wire from="(1220,520)" to="(1260,520)"/>
+    <wire from="(1220,360)" to="(1260,360)"/>
     <wire from="(490,170)" to="(600,170)"/>
     <wire from="(620,10)" to="(620,160)"/>
     <wire from="(470,330)" to="(510,330)"/>
@@ -159,12 +159,12 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <wire from="(1130,390)" to="(1130,410)"/>
     <wire from="(1220,330)" to="(1260,330)"/>
     <wire from="(1220,290)" to="(1260,290)"/>
-    <wire from="(1220,410)" to="(1260,410)"/>
     <wire from="(1220,370)" to="(1260,370)"/>
+    <wire from="(1220,410)" to="(1260,410)"/>
     <wire from="(1220,250)" to="(1260,250)"/>
     <wire from="(1220,450)" to="(1260,450)"/>
-    <wire from="(1220,530)" to="(1260,530)"/>
     <wire from="(1220,490)" to="(1260,490)"/>
+    <wire from="(1220,530)" to="(1260,530)"/>
     <wire from="(1030,420)" to="(1070,420)"/>
     <wire from="(510,300)" to="(550,300)"/>
     <wire from="(270,40)" to="(430,40)"/>
@@ -177,12 +177,12 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <wire from="(500,280)" to="(510,280)"/>
     <wire from="(270,40)" to="(270,160)"/>
     <wire from="(640,180)" to="(650,180)"/>
-    <wire from="(1220,260)" to="(1260,260)"/>
+    <wire from="(1220,300)" to="(1260,300)"/>
     <wire from="(1220,420)" to="(1260,420)"/>
     <wire from="(1220,220)" to="(1260,220)"/>
-    <wire from="(1220,500)" to="(1260,500)"/>
+    <wire from="(1220,260)" to="(1260,260)"/>
     <wire from="(1220,460)" to="(1260,460)"/>
-    <wire from="(1220,300)" to="(1260,300)"/>
+    <wire from="(1220,500)" to="(1260,500)"/>
     <wire from="(1220,340)" to="(1260,340)"/>
     <wire from="(230,70)" to="(410,70)"/>
     <wire from="(570,190)" to="(570,280)"/>
@@ -207,14 +207,109 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <wire from="(980,370)" to="(980,420)"/>
     <wire from="(1240,540)" to="(1260,540)"/>
     <wire from="(990,400)" to="(1070,400)"/>
+    <comp lib="0" loc="(680,180)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="32"/>
+      <a name="label" val="Y"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="0" loc="(570,280)" name="Splitter">
+      <a name="facing" val="west"/>
+      <a name="incoming" val="32"/>
+      <a name="bit2" val="1"/>
+      <a name="bit3" val="1"/>
+      <a name="bit4" val="1"/>
+      <a name="bit5" val="1"/>
+      <a name="bit6" val="1"/>
+      <a name="bit7" val="1"/>
+      <a name="bit8" val="1"/>
+      <a name="bit9" val="1"/>
+      <a name="bit10" val="1"/>
+      <a name="bit11" val="1"/>
+      <a name="bit12" val="1"/>
+      <a name="bit13" val="1"/>
+      <a name="bit14" val="1"/>
+      <a name="bit15" val="1"/>
+      <a name="bit16" val="1"/>
+      <a name="bit17" val="1"/>
+      <a name="bit18" val="1"/>
+      <a name="bit19" val="1"/>
+      <a name="bit20" val="1"/>
+      <a name="bit21" val="1"/>
+      <a name="bit22" val="1"/>
+      <a name="bit23" val="1"/>
+      <a name="bit24" val="1"/>
+      <a name="bit25" val="1"/>
+      <a name="bit26" val="1"/>
+      <a name="bit27" val="1"/>
+      <a name="bit28" val="1"/>
+      <a name="bit29" val="1"/>
+      <a name="bit30" val="1"/>
+      <a name="bit31" val="1"/>
+    </comp>
+    <comp lib="3" loc="(720,290)" name="Comparator">
+      <a name="width" val="32"/>
+      <a name="mode" val="unsigned"/>
+    </comp>
+    <comp lib="2" loc="(540,400)" name="BitSelector">
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="1" loc="(1310,380)" name="AND Gate">
+      <a name="inputs" val="32"/>
+    </comp>
+    <comp lib="0" loc="(600,400)" name="Bit Extender">
+      <a name="in_width" val="1"/>
+      <a name="out_width" val="32"/>
+    </comp>
     <comp lib="0" loc="(120,80)" name="Splitter">
       <a name="fanout" val="3"/>
       <a name="incoming" val="3"/>
+    </comp>
+    <comp lib="0" loc="(470,330)" name="Constant">
+      <a name="width" val="31"/>
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="2" loc="(640,180)" name="Multiplexer">
+      <a name="selloc" val="tr"/>
+      <a name="select" val="2"/>
+      <a name="width" val="32"/>
     </comp>
     <comp lib="0" loc="(1200,380)" name="Splitter">
       <a name="fanout" val="32"/>
       <a name="incoming" val="32"/>
       <a name="appear" val="center"/>
+    </comp>
+    <comp lib="1" loc="(480,180)" name="OR Gate">
+      <a name="width" val="32"/>
+      <a name="inputs" val="2"/>
+    </comp>
+    <comp lib="0" loc="(770,290)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="1" loc="(1030,350)" name="NOT Gate">
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(90,80)" name="Pin">
+      <a name="width" val="3"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="F"/>
+    </comp>
+    <comp lib="2" loc="(250,160)" name="Multiplexer">
+      <a name="selloc" val="tr"/>
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="1" loc="(1100,360)" name="AND Gate">
+      <a name="width" val="32"/>
+      <a name="size" val="30"/>
+      <a name="inputs" val="2"/>
+    </comp>
+    <comp lib="0" loc="(140,290)" name="Pin">
+      <a name="width" val="32"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="A"/>
     </comp>
     <comp lib="0" loc="(510,280)" name="Splitter">
       <a name="fanout" val="1"/>
@@ -253,152 +348,57 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="bit30" val="none"/>
       <a name="bit31" val="0"/>
     </comp>
-    <comp lib="6" loc="(517,365)" name="Text">
-      <a name="text" val="Alternative"/>
+    <comp lib="6" loc="(1017,324)" name="Text">
+      <a name="text" val="Comparator"/>
     </comp>
-    <comp lib="0" loc="(680,180)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
+    <comp lib="0" loc="(950,420)" name="Constant">
       <a name="width" val="32"/>
-      <a name="label" val="Y"/>
-      <a name="labelloc" val="east"/>
-    </comp>
-    <comp lib="0" loc="(170,40)" name="Splitter">
-      <a name="facing" val="west"/>
+      <a name="value" val="0x0"/>
     </comp>
     <comp lib="1" loc="(1100,410)" name="AND Gate">
       <a name="width" val="32"/>
       <a name="size" val="30"/>
       <a name="inputs" val="2"/>
     </comp>
-    <comp lib="0" loc="(470,330)" name="Constant">
-      <a name="width" val="31"/>
-      <a name="value" val="0x0"/>
-    </comp>
-    <comp lib="0" loc="(140,290)" name="Pin">
-      <a name="width" val="32"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="A"/>
-    </comp>
-    <comp lib="1" loc="(210,180)" name="NOT Gate">
+    <comp lib="1" loc="(1030,420)" name="NOT Gate">
       <a name="width" val="32"/>
     </comp>
-    <comp lib="3" loc="(720,290)" name="Comparator">
-      <a name="width" val="32"/>
-      <a name="mode" val="unsigned"/>
-    </comp>
-    <comp lib="0" loc="(600,400)" name="Bit Extender">
-      <a name="in_width" val="1"/>
-      <a name="out_width" val="32"/>
-    </comp>
-    <comp lib="0" loc="(90,80)" name="Pin">
-      <a name="width" val="3"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="F"/>
-    </comp>
-    <comp lib="1" loc="(480,60)" name="AND Gate">
-      <a name="width" val="32"/>
-      <a name="inputs" val="2"/>
-    </comp>
-    <comp lib="2" loc="(640,180)" name="Multiplexer">
-      <a name="selloc" val="tr"/>
-      <a name="select" val="2"/>
+    <comp lib="3" loc="(470,280)" name="Adder">
       <a name="width" val="32"/>
     </comp>
-    <comp lib="0" loc="(770,290)" name="Pin">
+    <comp lib="6" loc="(811,296)" name="Text">
+      <a name="text" val="Zero"/>
+    </comp>
+    <comp lib="0" loc="(170,40)" name="Splitter">
       <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="labelloc" val="east"/>
-    </comp>
-    <comp lib="1" loc="(1310,380)" name="AND Gate">
-      <a name="inputs" val="32"/>
-    </comp>
-    <comp lib="0" loc="(570,280)" name="Splitter">
-      <a name="facing" val="west"/>
-      <a name="incoming" val="32"/>
-      <a name="bit2" val="1"/>
-      <a name="bit3" val="1"/>
-      <a name="bit4" val="1"/>
-      <a name="bit5" val="1"/>
-      <a name="bit6" val="1"/>
-      <a name="bit7" val="1"/>
-      <a name="bit8" val="1"/>
-      <a name="bit9" val="1"/>
-      <a name="bit10" val="1"/>
-      <a name="bit11" val="1"/>
-      <a name="bit12" val="1"/>
-      <a name="bit13" val="1"/>
-      <a name="bit14" val="1"/>
-      <a name="bit15" val="1"/>
-      <a name="bit16" val="1"/>
-      <a name="bit17" val="1"/>
-      <a name="bit18" val="1"/>
-      <a name="bit19" val="1"/>
-      <a name="bit20" val="1"/>
-      <a name="bit21" val="1"/>
-      <a name="bit22" val="1"/>
-      <a name="bit23" val="1"/>
-      <a name="bit24" val="1"/>
-      <a name="bit25" val="1"/>
-      <a name="bit26" val="1"/>
-      <a name="bit27" val="1"/>
-      <a name="bit28" val="1"/>
-      <a name="bit29" val="1"/>
-      <a name="bit30" val="1"/>
-      <a name="bit31" val="1"/>
-    </comp>
-    <comp lib="2" loc="(250,160)" name="Multiplexer">
-      <a name="selloc" val="tr"/>
-      <a name="width" val="32"/>
-    </comp>
-    <comp lib="0" loc="(670,300)" name="Constant">
-      <a name="width" val="32"/>
-      <a name="value" val="0x0"/>
     </comp>
     <comp lib="0" loc="(510,450)" name="Constant">
       <a name="width" val="5"/>
       <a name="value" val="0x1f"/>
-    </comp>
-    <comp lib="0" loc="(950,420)" name="Constant">
-      <a name="width" val="32"/>
-      <a name="value" val="0x0"/>
     </comp>
     <comp lib="0" loc="(140,150)" name="Pin">
       <a name="width" val="32"/>
       <a name="tristate" val="false"/>
       <a name="label" val="B"/>
     </comp>
-    <comp lib="2" loc="(540,400)" name="BitSelector">
+    <comp lib="1" loc="(480,60)" name="AND Gate">
       <a name="width" val="32"/>
-    </comp>
-    <comp lib="6" loc="(811,296)" name="Text">
-      <a name="text" val="Zero"/>
-    </comp>
-    <comp lib="1" loc="(1030,350)" name="NOT Gate">
-      <a name="width" val="32"/>
-    </comp>
-    <comp lib="6" loc="(1017,324)" name="Text">
-      <a name="text" val="Comparator"/>
+      <a name="inputs" val="2"/>
     </comp>
     <comp lib="1" loc="(1190,380)" name="NOR Gate">
       <a name="width" val="32"/>
       <a name="size" val="30"/>
       <a name="inputs" val="2"/>
     </comp>
-    <comp lib="3" loc="(470,280)" name="Adder">
+    <comp lib="6" loc="(517,365)" name="Text">
+      <a name="text" val="Alternative"/>
+    </comp>
+    <comp lib="1" loc="(210,180)" name="NOT Gate">
       <a name="width" val="32"/>
     </comp>
-    <comp lib="1" loc="(480,180)" name="OR Gate">
+    <comp lib="0" loc="(670,300)" name="Constant">
       <a name="width" val="32"/>
-      <a name="inputs" val="2"/>
-    </comp>
-    <comp lib="1" loc="(1100,360)" name="AND Gate">
-      <a name="width" val="32"/>
-      <a name="size" val="30"/>
-      <a name="inputs" val="2"/>
-    </comp>
-    <comp lib="1" loc="(1030,420)" name="NOT Gate">
-      <a name="width" val="32"/>
+      <a name="value" val="0x0"/>
     </comp>
   </circuit>
   <circuit name="Datapath">
@@ -521,80 +521,13 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <wire from="(510,380)" to="(510,430)"/>
     <wire from="(100,570)" to="(110,570)"/>
     <wire from="(400,470)" to="(400,530)"/>
-    <comp lib="0" loc="(490,380)" name="Constant">
-      <a name="value" val="0x0"/>
-    </comp>
-    <comp lib="1" loc="(580,40)" name="AND Gate">
-      <a name="facing" val="west"/>
-      <a name="size" val="30"/>
-      <a name="inputs" val="2"/>
-    </comp>
-    <comp lib="3" loc="(770,590)" name="Shifter">
-      <a name="width" val="32"/>
-    </comp>
-    <comp lib="0" loc="(820,590)" name="Bit Extender">
-      <a name="in_width" val="32"/>
-      <a name="out_width" val="8"/>
-    </comp>
-    <comp lib="6" loc="(320,270)" name="Text">
-      <a name="text" val="Instruction Memory"/>
+    <comp loc="(650,340)" name="RegisterFile"/>
+    <comp lib="6" loc="(114,282)" name="Text">
+      <a name="text" val="PC"/>
     </comp>
     <comp lib="0" loc="(720,600)" name="Constant">
       <a name="width" val="5"/>
       <a name="value" val="0x2"/>
-    </comp>
-    <comp lib="6" loc="(543,77)" name="Text">
-      <a name="text" val="Control Unit"/>
-    </comp>
-    <comp lib="3" loc="(880,600)" name="Adder"/>
-    <comp lib="0" loc="(420,560)" name="Constant">
-      <a name="width" val="2"/>
-    </comp>
-    <comp lib="4" loc="(100,90)" name="D Flip-Flop"/>
-    <comp lib="3" loc="(150,560)" name="Adder"/>
-    <comp lib="2" loc="(470,600)" name="BitSelector">
-      <a name="width" val="32"/>
-      <a name="group" val="16"/>
-    </comp>
-    <comp lib="0" loc="(460,560)" name="Constant">
-      <a name="width" val="2"/>
-      <a name="value" val="0x0"/>
-    </comp>
-    <comp lib="3" loc="(240,320)" name="Shifter">
-      <a name="shift" val="lr"/>
-    </comp>
-    <comp lib="2" loc="(480,530)" name="BitSelector">
-      <a name="width" val="11"/>
-      <a name="group" val="3"/>
-    </comp>
-    <comp lib="0" loc="(450,380)" name="Constant">
-      <a name="width" val="3"/>
-      <a name="value" val="0x4"/>
-    </comp>
-    <comp lib="2" loc="(510,430)" name="Multiplexer">
-      <a name="facing" val="north"/>
-      <a name="selloc" val="tr"/>
-      <a name="width" val="3"/>
-    </comp>
-    <comp lib="2" loc="(470,350)" name="BitSelector">
-      <a name="width" val="32"/>
-      <a name="group" val="4"/>
-    </comp>
-    <comp lib="2" loc="(70,380)" name="Multiplexer">
-      <a name="facing" val="north"/>
-      <a name="selloc" val="tr"/>
-      <a name="width" val="8"/>
-    </comp>
-    <comp loc="(650,340)" name="RegisterFile"/>
-    <comp loc="(930,320)" name="ALU"/>
-    <comp lib="4" loc="(130,310)" name="Register"/>
-    <comp lib="0" loc="(420,500)" name="Constant">
-      <a name="width" val="3"/>
-      <a name="value" val="0x4"/>
-    </comp>
-    <comp lib="2" loc="(440,530)" name="BitSelector">
-      <a name="width" val="32"/>
-      <a name="group" val="11"/>
     </comp>
     <comp lib="2" loc="(510,350)" name="BitSelector">
       <a name="width" val="4"/>
@@ -604,17 +537,6 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="width" val="4"/>
       <a name="group" val="3"/>
     </comp>
-    <comp lib="0" loc="(100,570)" name="Constant">
-      <a name="width" val="8"/>
-      <a name="value" val="0x4"/>
-    </comp>
-    <comp lib="0" loc="(190,330)" name="Constant">
-      <a name="width" val="3"/>
-      <a name="value" val="0x2"/>
-    </comp>
-    <comp lib="0" loc="(90,180)" name="Clock">
-      <a name="facing" val="south"/>
-    </comp>
     <comp lib="0" loc="(1150,400)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
@@ -622,22 +544,60 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="label" val="$v0"/>
       <a name="labelloc" val="east"/>
     </comp>
-    <comp loc="(600,100)" name="ControlUnit"/>
-    <comp lib="2" loc="(440,470)" name="BitSelector">
-      <a name="width" val="32"/>
-      <a name="group" val="4"/>
+    <comp lib="0" loc="(820,590)" name="Bit Extender">
+      <a name="in_width" val="32"/>
+      <a name="out_width" val="8"/>
     </comp>
-    <comp lib="2" loc="(740,370)" name="Multiplexer">
+    <comp lib="2" loc="(70,380)" name="Multiplexer">
+      <a name="facing" val="north"/>
       <a name="selloc" val="tr"/>
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="0" loc="(100,570)" name="Constant">
+      <a name="width" val="8"/>
+      <a name="value" val="0x4"/>
+    </comp>
+    <comp lib="0" loc="(450,330)" name="Constant">
+      <a name="width" val="4"/>
+      <a name="value" val="0x7"/>
+    </comp>
+    <comp lib="0" loc="(420,500)" name="Constant">
+      <a name="width" val="3"/>
+      <a name="value" val="0x4"/>
+    </comp>
+    <comp lib="0" loc="(90,180)" name="Clock">
+      <a name="facing" val="south"/>
+    </comp>
+    <comp lib="3" loc="(240,320)" name="Shifter">
+      <a name="shift" val="lr"/>
+    </comp>
+    <comp lib="2" loc="(440,530)" name="BitSelector">
+      <a name="width" val="32"/>
+      <a name="group" val="11"/>
+    </comp>
+    <comp loc="(600,100)" name="ControlUnit"/>
+    <comp lib="2" loc="(470,600)" name="BitSelector">
+      <a name="width" val="32"/>
+      <a name="group" val="16"/>
+    </comp>
+    <comp lib="3" loc="(770,590)" name="Shifter">
       <a name="width" val="32"/>
     </comp>
-    <comp lib="0" loc="(460,500)" name="Constant">
-      <a name="value" val="0x0"/>
+    <comp lib="0" loc="(560,490)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="3"/>
+      <a name="labelloc" val="east"/>
     </comp>
-    <comp lib="2" loc="(470,300)" name="BitSelector">
-      <a name="width" val="32"/>
-      <a name="group" val="3"/>
+    <comp lib="1" loc="(580,40)" name="AND Gate">
+      <a name="facing" val="west"/>
+      <a name="size" val="30"/>
+      <a name="inputs" val="2"/>
     </comp>
+    <comp lib="0" loc="(420,560)" name="Constant">
+      <a name="width" val="2"/>
+    </comp>
+    <comp lib="4" loc="(130,310)" name="Register"/>
     <comp lib="4" loc="(390,320)" name="ROM">
       <a name="dataWidth" val="32"/>
       <a name="contents">addr/data: 8 32
@@ -646,26 +606,65 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
 10240003 20 1000fff2 20 1000ffff
 </a>
     </comp>
+    <comp lib="6" loc="(320,270)" name="Text">
+      <a name="text" val="Instruction Memory"/>
+    </comp>
+    <comp lib="3" loc="(880,600)" name="Adder"/>
+    <comp lib="2" loc="(440,470)" name="BitSelector">
+      <a name="width" val="32"/>
+      <a name="group" val="4"/>
+    </comp>
+    <comp lib="0" loc="(490,380)" name="Constant">
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp loc="(930,320)" name="ALU"/>
+    <comp lib="0" loc="(190,330)" name="Constant">
+      <a name="width" val="3"/>
+      <a name="value" val="0x2"/>
+    </comp>
     <comp lib="0" loc="(530,600)" name="Bit Extender">
       <a name="in_width" val="16"/>
       <a name="out_width" val="32"/>
       <a name="type" val="sign"/>
     </comp>
+    <comp lib="6" loc="(543,77)" name="Text">
+      <a name="text" val="Control Unit"/>
+    </comp>
     <comp lib="0" loc="(450,630)" name="Constant">
       <a name="value" val="0x0"/>
     </comp>
-    <comp lib="6" loc="(114,282)" name="Text">
-      <a name="text" val="PC"/>
+    <comp lib="0" loc="(460,500)" name="Constant">
+      <a name="value" val="0x0"/>
     </comp>
-    <comp lib="0" loc="(560,490)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
+    <comp lib="0" loc="(450,380)" name="Constant">
       <a name="width" val="3"/>
-      <a name="labelloc" val="east"/>
+      <a name="value" val="0x4"/>
     </comp>
-    <comp lib="0" loc="(450,330)" name="Constant">
-      <a name="width" val="4"/>
-      <a name="value" val="0x7"/>
+    <comp lib="2" loc="(470,350)" name="BitSelector">
+      <a name="width" val="32"/>
+      <a name="group" val="4"/>
+    </comp>
+    <comp lib="2" loc="(740,370)" name="Multiplexer">
+      <a name="selloc" val="tr"/>
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="2" loc="(470,300)" name="BitSelector">
+      <a name="width" val="32"/>
+      <a name="group" val="3"/>
+    </comp>
+    <comp lib="3" loc="(150,560)" name="Adder"/>
+    <comp lib="0" loc="(460,560)" name="Constant">
+      <a name="width" val="2"/>
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="2" loc="(480,530)" name="BitSelector">
+      <a name="width" val="11"/>
+      <a name="group" val="3"/>
+    </comp>
+    <comp lib="2" loc="(510,430)" name="Multiplexer">
+      <a name="facing" val="north"/>
+      <a name="selloc" val="tr"/>
+      <a name="width" val="3"/>
     </comp>
   </circuit>
   <circuit name="Tests">
@@ -688,48 +687,55 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <wire from="(340,300)" to="(380,300)"/>
     <wire from="(410,500)" to="(450,500)"/>
     <wire from="(360,110)" to="(430,110)"/>
-    <comp lib="2" loc="(340,300)" name="BitSelector">
-      <a name="width" val="32"/>
-      <a name="group" val="8"/>
-    </comp>
-    <comp lib="0" loc="(310,340)" name="Constant">
-      <a name="width" val="2"/>
-    </comp>
-    <comp lib="2" loc="(330,500)" name="BitSelector">
-      <a name="width" val="32"/>
-      <a name="group" val="8"/>
-    </comp>
-    <comp lib="6" loc="(364,424)" name="Text">
-      <a name="text" val="Example 3: Now, assume that you want to extract 3 bits at   "/>
-    </comp>
     <comp lib="6" loc="(358,257)" name="Text">
       <a name="text" val="bit group #1 (starting at index 0) is selected for the output."/>
     </comp>
     <comp lib="6" loc="(381,276)" name="Text">
       <a name="text" val="That is, the 8 bits 0x67 at bit indices 15..8  are sent to the output."/>
     </comp>
-    <comp lib="0" loc="(380,540)" name="Constant">
+    <comp lib="6" loc="(344,222)" name="Text">
+      <a name="text" val="Example 2: The bit selector is configured to have 32  "/>
+    </comp>
+    <comp lib="0" loc="(310,340)" name="Constant">
       <a name="width" val="2"/>
-      <a name="value" val="0x0"/>
     </comp>
-    <comp lib="0" loc="(280,300)" name="Constant">
+    <comp lib="2" loc="(410,500)" name="BitSelector">
+      <a name="group" val="3"/>
+    </comp>
+    <comp lib="6" loc="(390,52)" name="Text">
+      <a name="text" val="binary values in Logisim. Convince yourself how the bits are displayed."/>
+    </comp>
+    <comp lib="0" loc="(360,110)" name="Constant">
       <a name="width" val="32"/>
-      <a name="value" val="0x12356789"/>
+      <a name="value" val="0xf4010207"/>
     </comp>
-    <comp lib="6" loc="(421,35)" name="Text">
-      <a name="text" val="Example 1: A simple example that illustrates how 32-bit values are displayed as "/>
+    <comp lib="2" loc="(330,500)" name="BitSelector">
+      <a name="width" val="32"/>
+      <a name="group" val="8"/>
+    </comp>
+    <comp lib="0" loc="(380,300)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="8"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="0" loc="(370,460)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="8"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="6" loc="(364,424)" name="Text">
+      <a name="text" val="Example 3: Now, assume that you want to extract 3 bits at   "/>
+    </comp>
+    <comp lib="6" loc="(412,238)" name="Text">
+      <a name="text" val="input bits and 8 output bits. The parameter constant is 1, which means that   "/>
     </comp>
     <comp lib="0" loc="(450,500)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
       <a name="width" val="3"/>
       <a name="labelloc" val="east"/>
-    </comp>
-    <comp lib="6" loc="(344,222)" name="Text">
-      <a name="text" val="Example 2: The bit selector is configured to have 32  "/>
-    </comp>
-    <comp lib="6" loc="(390,52)" name="Text">
-      <a name="text" val="binary values in Logisim. Convince yourself how the bits are displayed."/>
     </comp>
     <comp lib="6" loc="(419,441)" name="Text">
       <a name="text" val="bit indices 10..8. This can be accoplished by putting two bit selecotrs in series."/>
@@ -738,27 +744,23 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="width" val="32"/>
       <a name="value" val="0x12356789"/>
     </comp>
-    <comp lib="0" loc="(370,460)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="8"/>
-      <a name="labelloc" val="east"/>
-    </comp>
-    <comp lib="0" loc="(360,110)" name="Constant">
+    <comp lib="2" loc="(340,300)" name="BitSelector">
       <a name="width" val="32"/>
-      <a name="value" val="0xf4010207"/>
+      <a name="group" val="8"/>
+    </comp>
+    <comp lib="0" loc="(280,300)" name="Constant">
+      <a name="width" val="32"/>
+      <a name="value" val="0x12356789"/>
+    </comp>
+    <comp lib="6" loc="(421,35)" name="Text">
+      <a name="text" val="Example 1: A simple example that illustrates how 32-bit values are displayed as "/>
     </comp>
     <comp lib="0" loc="(300,540)" name="Constant">
       <a name="width" val="2"/>
     </comp>
-    <comp lib="0" loc="(380,300)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="8"/>
-      <a name="labelloc" val="east"/>
-    </comp>
-    <comp lib="6" loc="(412,238)" name="Text">
-      <a name="text" val="input bits and 8 output bits. The parameter constant is 1, which means that   "/>
+    <comp lib="0" loc="(380,540)" name="Constant">
+      <a name="width" val="2"/>
+      <a name="value" val="0x0"/>
     </comp>
     <comp lib="0" loc="(430,110)" name="Pin">
       <a name="facing" val="west"/>
@@ -766,9 +768,6 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="width" val="32"/>
       <a name="label" val="Y"/>
       <a name="labelloc" val="east"/>
-    </comp>
-    <comp lib="2" loc="(410,500)" name="BitSelector">
-      <a name="group" val="3"/>
     </comp>
   </circuit>
   <circuit name="RegisterFile">
@@ -943,77 +942,19 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <wire from="(300,180)" to="(300,420)"/>
     <wire from="(70,170)" to="(140,170)"/>
     <wire from="(140,170)" to="(140,230)"/>
-    <comp lib="4" loc="(260,490)" name="Register">
-      <a name="width" val="32"/>
-    </comp>
-    <comp lib="2" loc="(460,180)" name="Multiplexer">
-      <a name="selloc" val="tr"/>
-      <a name="select" val="3"/>
-      <a name="width" val="32"/>
-    </comp>
-    <comp lib="0" loc="(490,340)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="32"/>
-      <a name="label" val="RD2"/>
-      <a name="labelloc" val="east"/>
-    </comp>
-    <comp lib="0" loc="(130,60)" name="Pin">
-      <a name="width" val="32"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="WD3"/>
-    </comp>
-    <comp lib="4" loc="(260,560)" name="Register">
-      <a name="width" val="32"/>
-    </comp>
-    <comp lib="0" loc="(310,90)" name="Pin">
-      <a name="width" val="3"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="A2"/>
-    </comp>
-    <comp lib="0" loc="(490,470)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="32"/>
-      <a name="label" val="V0"/>
-      <a name="labelloc" val="east"/>
-    </comp>
-    <comp lib="4" loc="(260,280)" name="Register">
-      <a name="width" val="32"/>
-    </comp>
     <comp lib="2" loc="(460,340)" name="Multiplexer">
       <a name="selloc" val="tr"/>
       <a name="select" val="3"/>
-      <a name="width" val="32"/>
-    </comp>
-    <comp lib="6" loc="(244,710)" name="Text">
-      <a name="text" val="$0 måste också timeas med CLK men nu blir det att 0 skrivs över varje gång"/>
-    </comp>
-    <comp lib="4" loc="(260,210)" name="Register">
-      <a name="width" val="32"/>
-    </comp>
-    <comp lib="1" loc="(190,290)" name="AND Gate">
-      <a name="size" val="30"/>
-      <a name="inputs" val="2"/>
-    </comp>
-    <comp lib="0" loc="(200,20)" name="Pin">
-      <a name="tristate" val="false"/>
-      <a name="label" val="CLK"/>
-    </comp>
-    <comp lib="4" loc="(260,350)" name="Register">
       <a name="width" val="32"/>
     </comp>
     <comp lib="1" loc="(190,360)" name="AND Gate">
       <a name="size" val="30"/>
       <a name="inputs" val="2"/>
     </comp>
-    <comp lib="1" loc="(190,220)" name="AND Gate">
-      <a name="size" val="30"/>
-      <a name="inputs" val="2"/>
-    </comp>
-    <comp lib="0" loc="(60,140)" name="Pin">
+    <comp lib="0" loc="(310,90)" name="Pin">
+      <a name="width" val="3"/>
       <a name="tristate" val="false"/>
-      <a name="label" val="WE3"/>
+      <a name="label" val="A2"/>
     </comp>
     <comp lib="0" loc="(490,180)" name="Pin">
       <a name="facing" val="west"/>
@@ -1022,6 +963,12 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="label" val="RD1"/>
       <a name="labelloc" val="east"/>
     </comp>
+    <comp lib="4" loc="(260,350)" name="Register">
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="4" loc="(260,490)" name="Register">
+      <a name="width" val="32"/>
+    </comp>
     <comp lib="1" loc="(190,640)" name="AND Gate">
       <a name="size" val="30"/>
       <a name="inputs" val="2"/>
@@ -1029,41 +976,93 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <comp lib="2" loc="(50,240)" name="Decoder">
       <a name="select" val="3"/>
     </comp>
+    <comp lib="4" loc="(260,630)" name="Register">
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(490,470)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="32"/>
+      <a name="label" val="V0"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="0" loc="(310,30)" name="Pin">
+      <a name="width" val="3"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="A1"/>
+    </comp>
+    <comp lib="0" loc="(490,340)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="32"/>
+      <a name="label" val="RD2"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="0" loc="(200,20)" name="Pin">
+      <a name="tristate" val="false"/>
+      <a name="label" val="CLK"/>
+    </comp>
+    <comp lib="4" loc="(260,210)" name="Register">
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="4" loc="(260,280)" name="Register">
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="1" loc="(190,570)" name="AND Gate">
+      <a name="size" val="30"/>
+      <a name="inputs" val="2"/>
+    </comp>
+    <comp lib="2" loc="(460,180)" name="Multiplexer">
+      <a name="selloc" val="tr"/>
+      <a name="select" val="3"/>
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="1" loc="(190,290)" name="AND Gate">
+      <a name="size" val="30"/>
+      <a name="inputs" val="2"/>
+    </comp>
+    <comp lib="1" loc="(190,500)" name="AND Gate">
+      <a name="size" val="30"/>
+      <a name="inputs" val="2"/>
+    </comp>
     <comp lib="0" loc="(50,350)" name="Pin">
       <a name="facing" val="north"/>
       <a name="width" val="3"/>
       <a name="tristate" val="false"/>
       <a name="label" val="A3"/>
     </comp>
-    <comp lib="1" loc="(190,500)" name="AND Gate">
-      <a name="size" val="30"/>
-      <a name="inputs" val="2"/>
-    </comp>
-    <comp lib="1" loc="(190,570)" name="AND Gate">
-      <a name="size" val="30"/>
-      <a name="inputs" val="2"/>
-    </comp>
-    <comp lib="4" loc="(260,420)" name="Register">
-      <a name="width" val="32"/>
-    </comp>
-    <comp lib="0" loc="(180,120)" name="Constant">
-      <a name="width" val="32"/>
-      <a name="value" val="0x0"/>
-    </comp>
     <comp lib="1" loc="(190,430)" name="AND Gate">
       <a name="size" val="30"/>
       <a name="inputs" val="2"/>
     </comp>
+    <comp lib="4" loc="(260,560)" name="Register">
+      <a name="width" val="32"/>
+    </comp>
+    <comp lib="0" loc="(60,140)" name="Pin">
+      <a name="tristate" val="false"/>
+      <a name="label" val="WE3"/>
+    </comp>
     <comp lib="4" loc="(260,150)" name="Register">
       <a name="width" val="32"/>
     </comp>
-    <comp lib="4" loc="(260,630)" name="Register">
+    <comp lib="0" loc="(130,60)" name="Pin">
+      <a name="width" val="32"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="WD3"/>
+    </comp>
+    <comp lib="4" loc="(260,420)" name="Register">
       <a name="width" val="32"/>
     </comp>
-    <comp lib="0" loc="(310,30)" name="Pin">
-      <a name="width" val="3"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="A1"/>
+    <comp lib="6" loc="(244,710)" name="Text">
+      <a name="text" val="$0 måste också timeas med CLK men nu blir det att 0 skrivs över varje gång"/>
+    </comp>
+    <comp lib="1" loc="(190,220)" name="AND Gate">
+      <a name="size" val="30"/>
+      <a name="inputs" val="2"/>
+    </comp>
+    <comp lib="0" loc="(180,120)" name="Constant">
+      <a name="width" val="32"/>
+      <a name="value" val="0x0"/>
     </comp>
   </circuit>
   <circuit name="ControlUnit">
@@ -1126,37 +1125,14 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <wire from="(660,160)" to="(670,160)"/>
     <wire from="(660,140)" to="(670,140)"/>
     <wire from="(410,110)" to="(610,110)"/>
-    <comp lib="0" loc="(730,150)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="label" val="RegWrite"/>
-      <a name="labelloc" val="east"/>
-    </comp>
     <comp lib="0" loc="(170,90)" name="Pin">
       <a name="width" val="32"/>
       <a name="tristate" val="false"/>
       <a name="label" val="Instruction"/>
     </comp>
-    <comp lib="3" loc="(290,100)" name="Shifter">
-      <a name="width" val="32"/>
-      <a name="shift" val="lr"/>
-    </comp>
-    <comp lib="0" loc="(440,260)" name="Constant">
-      <a name="width" val="3"/>
-      <a name="value" val="0x2"/>
-    </comp>
-    <comp lib="0" loc="(320,120)" name="Constant">
-      <a name="facing" val="north"/>
-      <a name="width" val="3"/>
-      <a name="value" val="0x0"/>
-    </comp>
-    <comp lib="0" loc="(230,110)" name="Constant">
-      <a name="width" val="5"/>
-      <a name="value" val="0x1a"/>
-    </comp>
-    <comp lib="0" loc="(440,280)" name="Constant">
-      <a name="width" val="3"/>
-      <a name="value" val="0x6"/>
+    <comp lib="3" loc="(410,380)" name="Comparator">
+      <a name="width" val="6"/>
+      <a name="mode" val="unsigned"/>
     </comp>
     <comp lib="0" loc="(730,80)" name="Pin">
       <a name="facing" val="west"/>
@@ -1164,42 +1140,29 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="label" val="RegDst"/>
       <a name="labelloc" val="east"/>
     </comp>
-    <comp lib="0" loc="(730,340)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="label" val="Branch"/>
-      <a name="labelloc" val="east"/>
-    </comp>
-    <comp lib="1" loc="(700,150)" name="OR Gate">
-      <a name="size" val="30"/>
-      <a name="inputs" val="2"/>
-    </comp>
-    <comp lib="0" loc="(360,390)" name="Constant">
-      <a name="width" val="6"/>
-      <a name="value" val="0x5"/>
-    </comp>
     <comp lib="1" loc="(610,340)" name="OR Gate">
       <a name="size" val="30"/>
       <a name="inputs" val="2"/>
     </comp>
-    <comp lib="0" loc="(360,340)" name="Constant">
-      <a name="width" val="6"/>
-      <a name="value" val="0x4"/>
-    </comp>
-    <comp lib="3" loc="(410,380)" name="Comparator">
+    <comp lib="3" loc="(410,330)" name="Comparator">
       <a name="width" val="6"/>
       <a name="mode" val="unsigned"/>
     </comp>
-    <comp lib="2" loc="(520,270)" name="Multiplexer">
-      <a name="width" val="3"/>
+    <comp lib="0" loc="(360,200)" name="Constant">
+      <a name="width" val="6"/>
+      <a name="value" val="0x0"/>
     </comp>
     <comp lib="3" loc="(410,110)" name="Comparator">
       <a name="width" val="6"/>
       <a name="mode" val="unsigned"/>
     </comp>
-    <comp lib="2" loc="(330,100)" name="BitSelector">
-      <a name="width" val="32"/>
-      <a name="group" val="6"/>
+    <comp lib="0" loc="(440,280)" name="Constant">
+      <a name="width" val="3"/>
+      <a name="value" val="0x6"/>
+    </comp>
+    <comp lib="0" loc="(360,390)" name="Constant">
+      <a name="width" val="6"/>
+      <a name="value" val="0x5"/>
     </comp>
     <comp lib="0" loc="(730,270)" name="Pin">
       <a name="facing" val="west"/>
@@ -1208,13 +1171,36 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="label" val="ALUControl"/>
       <a name="labelloc" val="east"/>
     </comp>
-    <comp lib="3" loc="(410,330)" name="Comparator">
-      <a name="width" val="6"/>
-      <a name="mode" val="unsigned"/>
+    <comp lib="3" loc="(290,100)" name="Shifter">
+      <a name="width" val="32"/>
+      <a name="shift" val="lr"/>
+    </comp>
+    <comp lib="0" loc="(320,120)" name="Constant">
+      <a name="facing" val="north"/>
+      <a name="width" val="3"/>
+      <a name="value" val="0x0"/>
     </comp>
     <comp lib="0" loc="(360,120)" name="Constant">
       <a name="width" val="6"/>
       <a name="value" val="0x8"/>
+    </comp>
+    <comp lib="0" loc="(360,340)" name="Constant">
+      <a name="width" val="6"/>
+      <a name="value" val="0x4"/>
+    </comp>
+    <comp lib="3" loc="(410,190)" name="Comparator">
+      <a name="width" val="6"/>
+      <a name="mode" val="unsigned"/>
+    </comp>
+    <comp lib="0" loc="(730,150)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="RegWrite"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="1" loc="(700,150)" name="OR Gate">
+      <a name="size" val="30"/>
+      <a name="inputs" val="2"/>
     </comp>
     <comp lib="0" loc="(730,210)" name="Pin">
       <a name="facing" val="west"/>
@@ -1222,13 +1208,26 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="label" val="ALUSrc"/>
       <a name="labelloc" val="east"/>
     </comp>
-    <comp lib="0" loc="(360,200)" name="Constant">
-      <a name="width" val="6"/>
-      <a name="value" val="0x0"/>
+    <comp lib="0" loc="(230,110)" name="Constant">
+      <a name="width" val="5"/>
+      <a name="value" val="0x1a"/>
     </comp>
-    <comp lib="3" loc="(410,190)" name="Comparator">
-      <a name="width" val="6"/>
-      <a name="mode" val="unsigned"/>
+    <comp lib="2" loc="(520,270)" name="Multiplexer">
+      <a name="width" val="3"/>
+    </comp>
+    <comp lib="0" loc="(730,340)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="Branch"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="2" loc="(330,100)" name="BitSelector">
+      <a name="width" val="32"/>
+      <a name="group" val="6"/>
+    </comp>
+    <comp lib="0" loc="(440,260)" name="Constant">
+      <a name="width" val="3"/>
+      <a name="value" val="0x2"/>
     </comp>
   </circuit>
 </project>

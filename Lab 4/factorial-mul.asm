@@ -8,7 +8,7 @@
 
 .text
 
-addi $a0, $0, 8 # set n
+addi $a0, $0, 3 # set n
 
 beq $a0, $0, zero
 

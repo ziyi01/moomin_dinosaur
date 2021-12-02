@@ -36,8 +36,9 @@ void display_debug( volatile int * const addr );
 /* Declare bitmap array containing font */
 extern const uint8_t const font[128*8];
 /* Declare bitmap array containing icon */
-extern const uint8_t const image[128*4]; // 4 rows of 128 8 bits values
+extern uint8_t image[128*4]; // 4 rows of 128 8 bits values
 /* Declare text buffer for display output */
+extern char textbuffer[4][16];
 
 /* Declare functions written by students */
 void delay(int);

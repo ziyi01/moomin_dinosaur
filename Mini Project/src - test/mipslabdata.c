@@ -8,6 +8,10 @@
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include "mipslab.h"  /* Declatations for these labs */
 
+char textbuffer[4][16];
+
+uint8_t image[128*4];
+
 const uint8_t const font[] = { // I DONT KNOW WHAT TO DO WITH THIS
 	0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0,

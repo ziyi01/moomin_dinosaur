@@ -202,7 +202,6 @@ void display_clear() {
 */
 void display_update(void) {
 	int i, j, k;
-	display_clear();
 	int c;
 	for(i = 0; i < 4; i++) {
 		DISPLAY_CHANGE_TO_COMMAND_MODE;
@@ -225,8 +224,9 @@ void display_update(void) {
 	}
 	
 	for(i = 0;  i < ARRAY_LENGTH; i++) {
-		//display_pixel(i, 2);
-		image[i] = 0x8;
+		image[0] = 0x8;
+		image[1] = 0x8;
+		image[2] = 0x8;
 		spi_send_recv(image[i]);
 	}
 }

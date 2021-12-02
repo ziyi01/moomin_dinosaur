@@ -21,44 +21,9 @@ void user_isr( void )
 }
 
 /* Lab-specific initialization goes here */
-void labinit( void )
+void init( void )
 {
-  // The 8 LSB are set as 0 to indicate it is output
-  int* trisE = (int*) 0xbf886100; // Doesn't need to be volatile as it is the direction which only needs to be initialized once
-  trisE[1] = 0xff; // TRISECLR should be 4 bytes(1 int place) away from TRISE start, only the marked bits should be cleared to 0
-
-  // Set bits 11 to 5 as 1 which sets the switches and buttons as input
-  TRISD |= 0xfe0;
-}
-
-/*
-  Uses getbtns() and getsw() from time4io to retrieve the status of
-  the Switches and Buttons 2-4 to update the time on display.
-
-*/
-void checkButton() {
-  volatile int btns = (volatile int) getbtns();
-  if(btns == 0) return; // Return if nothing is registered
-  
-  volatile int sw = (volatile int) getsw();
-  volatile int newtime = 0;
-
-  if((btns & 0x1) == 1) {
-  } 
-  if((btns & 0x2) == 2) {
-  }
-  if((btns & 0x4) == 4) {
-  }
-}
-
-/* This function is called repetitively from the main program */
-void labwork( void )
-{
-  display_image(96, icon);
-}
-
-int main(void) {
-        /*
+  /*
 	  This will set the peripheral bus clock to the same frequency
 	  as the sysclock. That means 80 MHz, when the microcontroller
 	  is running at 80 MHz. Changed 2017, as recommended by Axel.
@@ -99,15 +64,47 @@ int main(void) {
 	SPI2CONSET = 0x20;
 	/* SPI2CON bit ON = 1; */
 	SPI2CONSET = 0x8000;
-	
+
+  // The 8 LSB are set as 0 to indicate it is output
+  int* trisE = (int*) 0xbf886100; // Doesn't need to be volatile as it is the direction which only needs to be initialized once
+  trisE[1] = 0xff; // TRISECLR should be 4 bytes(1 int place) away from TRISE start, only the marked bits should be cleared to 0
+
+  // Set bits 11 to 5 as 1 which sets the switches and buttons as input
+  TRISD |= 0xfe0;
+}
+
+/*
+  Uses getbtns() and getsw() from time4io to retrieve the status of
+  the Switches and Buttons 2-4 to update the time on display.
+
+*/
+void checkButton() {
+  volatile int btns = (volatile int) getbtns();
+  if(btns == 0) return; // Return if nothing is registered
+  
+  volatile int sw = (volatile int) getsw();
+  volatile int newtime = 0;
+
+  if((btns & 0x1) == 1) {
+  } 
+  if((btns & 0x2) == 2) {
+  }
+  if((btns & 0x4) == 4) {
+  }
+}
+
+/* This function is called repetitively from the main program */
+void labwork( void )
+{
+}
+
+int main(void) {
+	init();
+
 	display_init();
-	display_string(0, "uwu");
+	//display_string(0, "uwu");
 	display_update();
 	
-	display_image(96, icon);
-	
-	labinit(); /* Do any lab-specific initialization */
-
 	while( 1 )
 	{
 	  labwork(); /* Do lab-specific things again and again */

@@ -23,131 +23,8 @@ static void num32asc( char * s, int );
 #define DISPLAY_TURN_OFF_VDD (PORTFSET = 0x40)
 #define DISPLAY_TURN_OFF_VBAT (PORTFSET = 0x20)
 
-/* quicksleep:
-   A simple function to create a small delay.
-   Very inefficient use of computing resources,
-   but very handy in some special cases. */
-void quicksleep(int cyc) {
-	int i;
-	for(i = cyc; i > 0; i--);
-}
+#define ARRAY_LENGTH sizeof(image)/sizeof(image[0])
 
-/* display_debug
-   A function to help debugging.
-
-   After calling display_debug,
-   the two middle lines of the display show
-   an address and its current contents.
-
-   There's one parameter: the address to read and display.
-
-   Note: When you use this function, you should comment out any
-   repeated calls to display_image; display_image overwrites
-   about half of the digits shown by display_debug.
-*/   
-void display_debug( volatile int * const addr )
-{
-  display_string( 1, "Addr" );
-  display_string( 2, "Data" );
-  num32asc( &textbuffer[1][6], (int) addr );
-  num32asc( &textbuffer[2][6], *addr );
-  display_update();
-}
-
-uint8_t spi_send_recv(uint8_t data) {
-	while(!(SPI2STAT & 0x08));
-	SPI2BUF = data;
-	while(!(SPI2STAT & 1));
-	return SPI2BUF;
-}
-
-void display_init(void) {
-        DISPLAY_CHANGE_TO_COMMAND_MODE;
-	quicksleep(10);
-	DISPLAY_ACTIVATE_VDD;
-	quicksleep(1000000);
-	
-	spi_send_recv(0xAE);
-	DISPLAY_ACTIVATE_RESET;
-	quicksleep(10);
-	DISPLAY_DO_NOT_RESET;
-	quicksleep(10);
-	
-	spi_send_recv(0x8D);
-	spi_send_recv(0x14);
-	
-	spi_send_recv(0xD9);
-	spi_send_recv(0xF1);
-	
-	DISPLAY_ACTIVATE_VBAT;
-	quicksleep(10000000);
-	
-	spi_send_recv(0xA1);
-	spi_send_recv(0xC8);
-	
-	spi_send_recv(0xDA);
-	spi_send_recv(0x20);
-	
-	spi_send_recv(0xAF);
-}
-
-void display_string(int line, char *s) {
-	int i;
-	if(line < 0 || line >= 4)
-		return;
-	if(!s)
-		return;
-	
-	for(i = 0; i < 16; i++)
-		if(*s) {
-			textbuffer[line][i] = *s;
-			s++;
-		} else
-			textbuffer[line][i] = ' ';
-}
-
-void display_image(int x, const uint8_t *data) {
-	int i, j;
-	
-	for(i = 0; i < 4; i++) {
-		DISPLAY_CHANGE_TO_COMMAND_MODE;
-
-		spi_send_recv(0x22);
-		spi_send_recv(i);
-		
-		spi_send_recv(x & 0xF);
-		spi_send_recv(0x10 | ((x >> 4) & 0xF));
-		
-		DISPLAY_CHANGE_TO_DATA_MODE;
-		
-		for(j = 0; j < 32; j++)
-			spi_send_recv(data[i*32 + j]);
-	}
-}
-
-void display_update(void) {
-	int i, j, k;
-	int c;
-	for(i = 0; i < 4; i++) {
-		DISPLAY_CHANGE_TO_COMMAND_MODE;
-		spi_send_recv(0x22);
-		spi_send_recv(i);
-		
-		spi_send_recv(0x0);
-		spi_send_recv(0x10);
-		
-		DISPLAY_CHANGE_TO_DATA_MODE;
-		
-		for(j = 0; j < 16; j++) {
-			c = textbuffer[i][j];
-			if(c & 0x80)
-				continue;
-			
-			for(k = 0; k < 8; k++)
-				spi_send_recv(font[c*8 + k]);
-		}
-	}
-}
 
 /* Helper function, local to this file.
    Converts a number to hexadecimal ASCII digits. */
@@ -237,4 +114,150 @@ char * itoaconv( int num )
   /* Since the loop always sets the index i to the next empty position,
    * we must add 1 in order to return a pointer to the first occupied position. */
   return( &itoa_buffer[ i + 1 ] );
+}
+
+/* quicksleep:
+   A simple function to create a small delay.
+   Very inefficient use of computing resources,
+   but very handy in some special cases. */
+void quicksleep(int cyc) {
+	int i;
+	for(i = cyc; i > 0; i--);
+}
+
+/* display_debug
+   A function to help debugging.
+
+   After calling display_debug,
+   the two middle lines of the display show
+   an address and its current contents.
+
+   There's one parameter: the address to read and display.
+
+   Note: When you use this function, you should comment out any
+   repeated calls to display_image; display_image overwrites
+   about half of the digits shown by display_debug.
+*/   
+void display_debug( volatile int * const addr )
+{
+  display_string( 1, "Addr" );
+  display_string( 2, "Data" );
+  num32asc( &textbuffer[1][6], (int) addr );
+  num32asc( &textbuffer[2][6], *addr );
+  display_update();
+}
+
+/*  sendSPI
+	Sends data to the display through the SPI Buffer.
+	
+	See Family Data Sheet SPI1-2 Registers and Serial Peripheral Interface.
+*/
+void spi_send_recv(uint8_t data) {
+	// Checks for SPIRBF = 1, SPITBE = 0
+	// SPIRBF = SPI Receive Buffer, SPITBE = Transmit Buffer Empty
+	while(!(SPI2STAT & 0x08));
+	SPI2BUF = data;
+	while(!(SPI2STAT & 1)); // If buffer has not received, wait till done
+	SPI2BUF;
+}
+
+void display_pixel(int x, int y) {
+	if(x < 128 && y < 32 && x > 0 && y > 0) {
+		int block = y / 8;
+		int yOff = y % 8;
+		image[block*128+x] = image[block*128+x] | 0x1 << yOff;
+	}
+}
+
+/*
+
+	WTF IS THIS
+
+*/
+void display_string(int line, char *s) {
+	int i;
+	if(line < 0 || line >= 4)
+		return;
+	if(!s)
+		return;
+	
+	for(i = 0; i < 16; i++)
+		if(*s) {
+			textbuffer[line][i] = *s;
+			s++;
+		} else
+			textbuffer[line][i] = ' ';
+}
+
+void display_clear() {
+	int i;
+	for(i = 0; i < ARRAY_LENGTH; i ++) {
+		image[i] = 0x0;
+	}
+}
+
+/*  display_update
+	
+	Send the data array to the render buffer
+*/
+void display_update(void) {
+	int i, j, k;
+	int c;
+	for(i = 0; i < 4; i++) {
+		DISPLAY_CHANGE_TO_COMMAND_MODE;
+		spi_send_recv(0x22);
+		spi_send_recv(i);
+		
+		spi_send_recv(0x0);
+		spi_send_recv(0x10);
+		
+		DISPLAY_CHANGE_TO_DATA_MODE;
+		
+		for(j = 0; j < 16; j++) {
+			c = textbuffer[i][j];
+			if(c & 0x80)
+				continue;
+			
+			for(k = 0; k < 8; k++)
+				spi_send_recv(font[c*8 + k]);
+		}
+	}
+	
+	for(i = 0;  i < ARRAY_LENGTH; i++) {
+		image[0] = 0x8;
+		image[1] = 0x8;
+		image[2] = 0x8;
+		spi_send_recv(image[i]);
+	}
+}
+
+/* Initialization */
+void display_init(void) {
+    DISPLAY_CHANGE_TO_COMMAND_MODE;
+	quicksleep(10);
+	DISPLAY_ACTIVATE_VDD;
+	quicksleep(1000000);
+	
+	spi_send_recv(0xAE);
+	DISPLAY_ACTIVATE_RESET;
+	quicksleep(10);
+	DISPLAY_DO_NOT_RESET;
+	quicksleep(10);
+	
+	spi_send_recv(0x8D);
+	spi_send_recv(0x14);
+	
+	spi_send_recv(0xD9);
+	spi_send_recv(0xF1);
+	
+	DISPLAY_ACTIVATE_VBAT;
+	quicksleep(10000000);
+	
+	spi_send_recv(0xA1);
+	spi_send_recv(0xC8);
+	
+	spi_send_recv(0xDA);
+	spi_send_recv(0x20);
+	
+	spi_send_recv(0xAF);
 }

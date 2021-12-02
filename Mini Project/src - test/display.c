@@ -23,6 +23,8 @@ static void num32asc( char * s, int );
 #define DISPLAY_TURN_OFF_VDD (PORTFSET = 0x40)
 #define DISPLAY_TURN_OFF_VBAT (PORTFSET = 0x20)
 
+#define ARRAY_LENGTH sizeof(image)/sizeof(image[0])
+
 /* quicksleep:
    A simple function to create a small delay.
    Very inefficient use of computing resources,
@@ -54,41 +56,18 @@ void display_debug( volatile int * const addr )
   display_update();
 }
 
-uint8_t spi_send_recv(uint8_t data) {
+/*  sendSPI
+	Sends data to the display through the SPI Buffer.
+	
+	See Family Data Sheet SPI1-2 Registers and Serial Peripheral Interface.
+*/
+void spi_send_recv(uint8_t data) {
+	// Checks for SPIRBF = 1, SPITBE = 0
+	// SPIRBF = SPI Receive Buffer, SPITBE = Transmit Buffer Empty
 	while(!(SPI2STAT & 0x08));
 	SPI2BUF = data;
-	while(!(SPI2STAT & 1));
-	return SPI2BUF;
-}
-
-void display_init(void) {
-        DISPLAY_CHANGE_TO_COMMAND_MODE;
-	quicksleep(10);
-	DISPLAY_ACTIVATE_VDD;
-	quicksleep(1000000);
-	
-	spi_send_recv(0xAE);
-	DISPLAY_ACTIVATE_RESET;
-	quicksleep(10);
-	DISPLAY_DO_NOT_RESET;
-	quicksleep(10);
-	
-	spi_send_recv(0x8D);
-	spi_send_recv(0x14);
-	
-	spi_send_recv(0xD9);
-	spi_send_recv(0xF1);
-	
-	DISPLAY_ACTIVATE_VBAT;
-	quicksleep(10000000);
-	
-	spi_send_recv(0xA1);
-	spi_send_recv(0xC8);
-	
-	spi_send_recv(0xDA);
-	spi_send_recv(0x20);
-	
-	spi_send_recv(0xAF);
+	while(!(SPI2STAT & 1)); // If buffer has not received, wait till done
+	SPI2BUF;
 }
 
 void display_string(int line, char *s) {
@@ -125,29 +104,48 @@ void display_image(int x, const uint8_t *data) {
 	}
 }
 
+/*  display_update
+	Send the data array to the render buffer
+
+*/
 void display_update(void) {
-	int i, j, k;
-	int c;
-	for(i = 0; i < 4; i++) {
-		DISPLAY_CHANGE_TO_COMMAND_MODE;
-		spi_send_recv(0x22);
-		spi_send_recv(i);
-		
-		spi_send_recv(0x0);
-		spi_send_recv(0x10);
-		
-		DISPLAY_CHANGE_TO_DATA_MODE;
-		
-		for(j = 0; j < 16; j++) {
-			c = textbuffer[i][j];
-			if(c & 0x80)
-				continue;
-			
-			for(k = 0; k < 8; k++)
-				spi_send_recv(font[c*8 + k]);
-		}
+	int i;
+	for(i = 0;  i < ARRAY_LENGTH, i++) {
+		sendSPI()
 	}
 }
+
+/* Initialization */
+void display_init(void) {
+    DISPLAY_CHANGE_TO_COMMAND_MODE;
+	quicksleep(10);
+	DISPLAY_ACTIVATE_VDD;
+	quicksleep(1000000);
+	
+	spi_send_recv(0xAE);
+	DISPLAY_ACTIVATE_RESET;
+	quicksleep(10);
+	DISPLAY_DO_NOT_RESET;
+	quicksleep(10);
+	
+	spi_send_recv(0x8D);
+	spi_send_recv(0x14);
+	
+	spi_send_recv(0xD9);
+	spi_send_recv(0xF1);
+	
+	DISPLAY_ACTIVATE_VBAT;
+	quicksleep(10000000);
+	
+	spi_send_recv(0xA1);
+	spi_send_recv(0xC8);
+	
+	spi_send_recv(0xDA);
+	spi_send_recv(0x20);
+	
+	spi_send_recv(0xAF);
+}
+
 
 /* Helper function, local to this file.
    Converts a number to hexadecimal ASCII digits. */

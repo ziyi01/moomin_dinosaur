@@ -25,7 +25,7 @@ www-test/
 .gwt-tmp/
 
 # project
-.c.o
-.elf
-.deps
-.S.o
+*.c.o
+*.elf
+*.deps
+*.S.o

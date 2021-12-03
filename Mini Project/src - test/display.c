@@ -6,7 +6,7 @@
 
 #include <stdint.h>   /* Declarations of uint_32 and the like */
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
-#include "mipslab.h"  /* Declatations for these labs */
+#include "game.h"  /* Declarations of the game */
 
 /* Declare a helper function which is local to this file */
 
@@ -52,7 +52,41 @@ void display_pixel(int x, int y) {
 	if(x < 128 && y < 32 && x >= 0 && y >= 0) {
 		int block = y / 8;
 		int yOff = y % 8;
-		image[block*128+x] = image[block*128+x] | 0x1 << yOff;
+		display[block*128+x] = display[block*128+x] | 0x1 << yOff;
+	}
+}
+
+//Smått stulen
+void display_string(int x, int line, char* string) {
+	const char* i;
+	int j;
+	int k = x;
+	for (i = string; *i!='\0'; i++) {
+		char c = *i;
+		/* Dont draw outside the screen */
+		if(j + k > 128) {
+			continue;
+		}
+		/* Space character */
+		if(c == 32) {
+			k += 4;
+			continue;
+		}
+		/* Display every hex value of a char */
+		for (j = 0; j<5; j++) {
+			/* Capital letters */
+			if(c >= 65 && c <= 90) {
+				display[j + k + line*128] |= font[(c - 65)*5 + j];
+			/* Normal letters */
+			} else if(c >= 97 && c <= 122) {
+				display[j + k + line*128] |= font[(c - 65 - 32)*5 + j];
+			/* Digits and colon */
+		    } else if(c >= 48 && c <= 58) {
+				display[j + k + line*128] |= font[(c - 48 + 26)*5 + j];
+			}
+		}
+		/* Next letter and add space. */
+		k += 7;
 	}
 }
 
@@ -60,14 +94,14 @@ void clear_pixel(int x, int y) {
 	if(x < 128 && y < 32 && x >= 0 && y >= 0) {
 		int block = y / 8;
 		int yOff = y % 8;
-		image[block*128+x] = image[block*128+x] | 0x0 << yOff;
+		display[block*128+x] = display[block*128+x] | 0x0 << yOff;
 	}
 }
 
 void clear_display() {
 	int i;
 	for(i = 0; i < ARRAY_SIZE; i ++) {
-		image[i] = 0x00;		
+		display[i] = 0x00;		
 	}
 }
 
@@ -87,7 +121,7 @@ void display_update(void) {
 		DISPLAY_CHANGE_TO_DATA_MODE;	
 
 		for(j = 0; j < ARRAY_SIZE/4; j ++) {
-			spi_send_recv(image[j]);
+			spi_send_recv(display[i*128+j]);
 		}
 	}
 }

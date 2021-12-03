@@ -1,4 +1,4 @@
-/* mipslab.h
+/* game.h
    Header file for all labs.
    This file written 2015 by F Lundevall
    Some parts are original code written by Axel Isaksson
@@ -9,7 +9,7 @@
 
 /* Declare display-related functions from display */
 void display_init(void);
-void display_string(int line, char *s);
+void display_string(int x, int line, char *s);
 void display_update(void);
 void spi_send_recv(uint8_t data);
 char * itoaconv( int num );
@@ -19,7 +19,7 @@ void quicksleep(int cyc);
 void game(void);
 
 /* Declare bitmap array containing the display */
-extern uint8_t image[512]; // 4 rows of 128 8 bits values
+extern uint8_t display[512]; // 4 rows of 128 8 bits values
 extern uint8_t font[185]; // Contains characters
 
 /* Written as part of i/o lab: getbtns, getsw, enable_interrupt */

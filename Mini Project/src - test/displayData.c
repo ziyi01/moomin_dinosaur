@@ -6,9 +6,9 @@
 
 #include <stdint.h>   /* Declarations of uint_32 and the like */
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
-#include "mipslab.h"  /* Declatations for these labs */
+#include "game.h"  /* Declatations for these labs */
 
-uint8_t image[512];
+uint8_t display[512];
 
 uint8_t font[185] = {
     0xFC, 0x12, 0x12, 0x12, 0xFC, // A

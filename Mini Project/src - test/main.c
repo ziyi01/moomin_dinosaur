@@ -9,7 +9,7 @@
 
 #include <stdint.h>   /* Declarations of uint_32 and the like */
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
-#include "mipslab.h"  /* Declatations for these labs */
+#include "game.h"  /* Declatations for these labs */
 
 /*
   Uses getbtns() and getsw() from time4io to retrieve the status of
@@ -48,7 +48,7 @@ int main(void) {
 	display_update();
 
 	int i, j;	
-	for(i = 0; i < 128; i ++) {
+	for(i = 0; i < 4; i ++) {
 		for(j = 0; j < 4; j ++) {
 			display_pixel(i, j);
 		}

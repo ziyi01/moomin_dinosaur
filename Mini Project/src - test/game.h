@@ -27,3 +27,6 @@ int getbtns(void);
 int getsw(void);
 void enable_interrupt(void);
 void delay(int);
+
+/* Declare render and character */
+void render_dino();

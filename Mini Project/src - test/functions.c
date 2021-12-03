@@ -1,4 +1,4 @@
-/* time4io.c
+/* functions.c
 
    This file written 2021-10-01 by Julia Wang
 
@@ -7,6 +7,16 @@
 #include <stdint.h>   
 #include <pic32mx.h>  
 #include "game.h"
+
+
+/* Interrupt Service Routine */
+void user_isr( void )
+{
+  // TO-DO: IMPLEMENT GAME OVER??
+
+
+  return;
+}
 
 /* getbtns()
       
@@ -24,12 +34,6 @@ int getbtns() {
 void tickLED(short light) {
   volatile int* led = (volatile int*) 0xbf886110; // PORTE
   *led = light;
-}
-
-/* Interrupt Service Routine */
-void user_isr( void )
-{
-  return;
 }
 
 /* General initializations goes here */

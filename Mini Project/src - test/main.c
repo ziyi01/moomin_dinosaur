@@ -47,12 +47,7 @@ int main(void) {
 	display_init();
 	display_update();
 
-	int i, j;	
-	for(i = 0; i < 4; i ++) {
-		for(j = 0; j < 4; j ++) {
-			display_pixel(i, j);
-		}
-	}
+  display_string(10, 2, "nopqrstuvwxyz");
 
 	while( 1 )
 	{

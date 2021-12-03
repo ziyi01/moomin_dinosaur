@@ -30,3 +30,4 @@ void delay(int);
 
 /* Declare render and character */
 void render_dino();
+void render_background();

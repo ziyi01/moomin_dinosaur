@@ -31,6 +31,10 @@ void checkButton() {
   }
 }
 
+void render() {
+  render_background();
+}
+
 /*
   The game loop
 */
@@ -48,6 +52,7 @@ int main(void) {
 	display_update();
 
   display_string(10, 2, "nopqrstuvwxyz");
+  render();
 
 	while( 1 )
 	{

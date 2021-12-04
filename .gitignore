@@ -24,8 +24,11 @@ www-test/
 #old GWT (1.5) created this dir
 .gwt-tmp/
 
-# project
+# Project, Assembly and C files
 *.c.o
 *.elf
 *.deps
 *.S.o
+
+# VSCode files
+.vscode

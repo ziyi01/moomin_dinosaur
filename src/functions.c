@@ -14,7 +14,6 @@ void user_isr( void )
 {
   // TO-DO: IMPLEMENT GAME OVER??
 
-
   return;
 }
 
@@ -37,7 +36,7 @@ void tickLED(short light) {
 }
 
 /* General initializations goes here */
-void init( void )
+void func_init( void )
 {
     /*
 	  This will set the peripheral bus clock to the same frequency

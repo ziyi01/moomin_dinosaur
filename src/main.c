@@ -27,12 +27,24 @@ void checkButton() {
     //FILL
   }
   if((btns & 0x4) == 4) {
-    //FILL
+    transition();
   }
 }
 
+/*
+  Activate render functions
+*/
 void render() {
   render_background();
+  display_string(10, 2, "abcd");
+}
+
+/*
+  Initial initialization
+*/
+void init() {
+  func_init();
+  display_init();
 }
 
 /*
@@ -41,17 +53,15 @@ void render() {
 void game() {
   checkButton();
 
-  //FILLLL
+  //To-Do: Make Game Logic
+
   display_update();
 }
 
 int main(void) {
 	init();
-
-	display_init();
-	display_update();
-
-  display_string(10, 2, "nopqrstuvwxyz");
+	
+  clear_display();
   render();
 
 	while( 1 )

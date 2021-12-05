@@ -6,7 +6,7 @@
 #include <pic32mx.h>  
 #include "game.h"
 
-typedef struc Dino {
+typedef struct Dino {
     int dinoX;
     int dinoY;
     int ySpeed;

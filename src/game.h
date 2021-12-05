@@ -11,20 +11,23 @@
 void game(void);
 void render(void);
 void init(void);
-void func_init(void);
 void timer_init(void);
 
 /* Written as part of i/o lab: getbtns, getsw, enable_interrupt */
 int getbtns(void);
 int getsw(void);
+void checkButton(void);
 void enable_interrupt(void);
 void delay(int);
+void user_isr(void);
+void tickLED(short);
 
 /* Declare render and character */
 void render_dino();
 void render_background();
 
-/* Declare timer for score */
+/* Timer */
+char * itoaconv( int num );
+void timer(void);
 short timeoutcount;
 int score;
-char * itoaconv( int num );

@@ -9,7 +9,8 @@
 
 #include <stdint.h>   /* Declarations of uint_32 and the like */
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
-#include "game.h"  /* Declatations for these labs */
+#include "game.h"  /* Declarations for the game */
+#include "display.h" /* Declarations for the display */
 
 /*
   Uses getbtns() and getsw() from time4io to retrieve the status of
@@ -36,15 +37,6 @@ void checkButton() {
 */
 void render() {
   render_background();
-  display_string(10, 2, "abcd");
-}
-
-/*
-  Initial initialization
-*/
-void init() {
-  func_init();
-  display_init();
 }
 
 /*
@@ -52,6 +44,7 @@ void init() {
 */
 void game() {
   checkButton();
+  timer();
 
   //To-Do: Make Game Logic
 
@@ -60,13 +53,19 @@ void game() {
 
 int main(void) {
 	init();
-	
-  clear_display();
-  render();
+	display_init();
+  timer_init();
 
 	while( 1 )
 	{
-    game();
+    // Testing renders and timer
+    timer();
+    clear_display();
+    render();
+    display_string(10, 1, "ABS");
+    display_string(10, 2, itoaconv(score));
+    delay(2);
+    display_update();
 	}
 	return 0;
 }

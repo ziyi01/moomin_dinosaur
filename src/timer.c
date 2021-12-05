@@ -28,8 +28,10 @@ void timer() {
     if(timeoutcount == 10) {
         timeoutcount = 0;
         IFS(0) = IFS(0) & ~0x100;
-        score++;
+        score++;  // Possibly change PERIOD and PR2 to speed score up
   }
+
+  return;
 }
 
 /*

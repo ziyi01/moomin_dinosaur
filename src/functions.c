@@ -36,7 +36,7 @@ void tickLED(short light) {
 }
 
 /* General initializations goes here */
-void func_init( void )
+void init( void )
 {
     /*
 	  This will set the peripheral bus clock to the same frequency

@@ -1,5 +1,6 @@
 /* game.h
-   Header file for all labs.
+   Header file for the game
+   
    This file written 2015 by F Lundevall
    Some parts are original code written by Axel Isaksson
 

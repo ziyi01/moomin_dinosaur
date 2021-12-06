@@ -1,9 +1,15 @@
+/* render.c
+
+
+*/
+
 #include <stdint.h>   
 #include <pic32mx.h>  
 #include "game.h"
+#include "structs.h"
 
-void render_dino() {
-
+void render_dino( struct Dino player ) {
+    //Gör dinosaurie baserat på X och Y
 }
 
 void render_background() {

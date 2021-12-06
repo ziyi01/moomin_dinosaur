@@ -1,4 +1,4 @@
-/* mipslabmain.c
+/* main.c
 
    This file written 2015 by Axel Isaksson,
    modified 2015, 2017 by F Lundevall
@@ -15,7 +15,6 @@
 /*
   Uses getbtns() and getsw() from time4io to retrieve the status of
   the Switches and Buttons 2-4 to update the time on display.
-
 */
 void checkButton() {
   volatile int btns = (volatile int) getbtns();

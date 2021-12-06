@@ -1,4 +1,4 @@
-/* mipslabmain.c
+/* main.c
 
    This file written 2015 by Axel Isaksson,
    modified 2015, 2017 by F Lundevall
@@ -9,12 +9,12 @@
 
 #include <stdint.h>   /* Declarations of uint_32 and the like */
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
-#include "game.h"  /* Declatations for these labs */
+#include "game.h"  /* Declarations for the game */
+#include "display.h" /* Declarations for the display */
 
 /*
   Uses getbtns() and getsw() from time4io to retrieve the status of
   the Switches and Buttons 2-4 to update the time on display.
-
 */
 void checkButton() {
   volatile int btns = (volatile int) getbtns();
@@ -27,10 +27,13 @@ void checkButton() {
     //FILL
   }
   if((btns & 0x4) == 4) {
-    //FILL
+    transition();
   }
 }
 
+/*
+  Activate render functions
+*/
 void render() {
   render_background();
 }
@@ -40,23 +43,28 @@ void render() {
 */
 void game() {
   checkButton();
+  timer();
 
-  //FILLLL
+  //To-Do: Make Game Logic
+
   display_update();
 }
 
 int main(void) {
 	init();
-
 	display_init();
-	display_update();
-
-  display_string(10, 2, "nopqrstuvwxyz");
-  render();
+  timer_init();
 
 	while( 1 )
 	{
-    game();
+    // Testing renders and timer
+    timer();
+    clear_display();
+    render();
+    display_string(10, 1, "ABS");
+    display_string(10, 2, itoaconv(score));
+    delay(2);
+    display_update();
 	}
 	return 0;
 }

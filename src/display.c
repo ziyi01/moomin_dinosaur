@@ -1,4 +1,4 @@
-/* mipslabfunc.c
+/* display.c
    This file written 2015 by F Lundevall
    Some parts are original code written by Axel Isaksson
 
@@ -6,7 +6,7 @@
 
 #include <stdint.h>   /* Declarations of uint_32 and the like */
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
-#include "game.h"  /* Declarations of the game */
+#include "display.h"  /* Declarations of the game */
 
 /* Declare a helper function which is local to this file */
 
@@ -22,7 +22,7 @@
 #define DISPLAY_TURN_OFF_VDD (PORTFSET = 0x40)
 #define DISPLAY_TURN_OFF_VBAT (PORTFSET = 0x20)
 
-#define ARRAY_SIZE 512
+#define ARRAY_SIZE sizeof(display) / sizeof(display[0])
 
 /* quicksleep:
    A simple function to create a small delay.
@@ -38,21 +38,30 @@ void quicksleep(int cyc) {
 	
 	See Family Data Sheet SPI1-2 Registers and Serial Peripheral Interface.
 */
-void spi_send_recv(uint8_t data) {
+uint8_t spi_send_recv(uint8_t data) {
 	// Checks for SPIRBF = 1, SPITBE = 0
 	// SPIRBF = SPI Receive Buffer, SPITBE = Transmit Buffer Empty
 	while(!(SPI2STAT & 0x08));
 	SPI2BUF = data;
 	while(!(SPI2STAT & 1)); // If buffer has not received, wait till done
+	return SPI2BUF;
 }
 
 /*	Display-functions  */
 
 void display_pixel(int x, int y) {
 	if(x < 128 && y < 32 && x >= 0 && y >= 0) {
+		int height = y / 8;
+		int yOff = y % 8;
+		display[height*128+x] = display[height*128+x] | 0x1 << yOff;
+	}
+}
+
+void clear_pixel(int x, int y) {
+	if(x < 128 && y < 32 && x >= 0 && y >= 0) {
 		int block = y / 8;
 		int yOff = y % 8;
-		display[block*128+x] = display[block*128+x] | 0x1 << yOff;
+		display[block*128+x] = display[block*128+x] & (~0x1 << yOff);
 	}
 }
 
@@ -90,14 +99,6 @@ void display_string(int x, int line, char* string) {
 	}
 }
 
-void clear_pixel(int x, int y) {
-	if(x < 128 && y < 32 && x >= 0 && y >= 0) {
-		int block = y / 8;
-		int yOff = y % 8;
-		display[block*128+x] = display[block*128+x] | 0x0 << yOff;
-	}
-}
-
 void clear_display() {
 	int i;
 	for(i = 0; i < ARRAY_SIZE; i ++) {
@@ -110,20 +111,10 @@ void clear_display() {
 */
 void display_update(void) {
 	int i, j;
-	for(i = 0; i < 4; i++) {
-		DISPLAY_CHANGE_TO_COMMAND_MODE;
-		spi_send_recv(0x22);
-		spi_send_recv(i);
-		
-		spi_send_recv(0x0);
-		spi_send_recv(0x10);
-		
-		DISPLAY_CHANGE_TO_DATA_MODE;	
-
-		for(j = 0; j < ARRAY_SIZE/4; j ++) {
-			spi_send_recv(display[i*128+j]);
-		}
+	for(i = 0; i < ARRAY_SIZE; i++) {
+		spi_send_recv(display[i]);
 	}
+	return;
 }
 
 /* Initialization */
@@ -153,6 +144,10 @@ void display_init(void) {
 	
 	spi_send_recv(0xDA);
 	spi_send_recv(0x20);
-	
+
+	spi_send_recv(0x20);
+	spi_send_recv(0x0);	
 	spi_send_recv(0xAF);
+	quicksleep(100);
+	DISPLAY_CHANGE_TO_DATA_MODE;
 }

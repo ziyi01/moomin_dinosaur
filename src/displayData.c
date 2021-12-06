@@ -1,15 +1,17 @@
-/* mipslabdata.c
-   This file compiled 2015 by F Lundevall
-   from original code written by Axel Isaksson
+/* displayData.c
+
+    Last modified 2021 by Julia Wang
+    Based on original code by Johan von Hacth and David Johansson
 
    For copyright and licensing, see file COPYING */
 
 #include <stdint.h>   /* Declarations of uint_32 and the like */
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
-#include "game.h"  /* Declatations for these labs */
+#include "display.h"  /* Declarations for the game */
 
-uint8_t display[512];
+uint8_t display[512]; /* Initialise the data array containing all pixels of the display */
 
+/* Each value is a column from left to right, that makes a letter */
 uint8_t font[185] = {
     0xFC, 0x12, 0x12, 0x12, 0xFC, // A
 

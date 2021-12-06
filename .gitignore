@@ -29,6 +29,7 @@ www-test/
 *.elf
 *.deps
 *.S.o
+*.hex
 
 # VSCode files
 .vscode

@@ -1,4 +1,4 @@
-/*
+/* structs.h
 
 */
 
@@ -6,8 +6,8 @@
 #include <pic32mx.h>  
 #include "game.h"
 
-typedef struc Dino {
+struct Dino {
     int dinoX;
     int dinoY;
     int ySpeed;
-}
+} Player;

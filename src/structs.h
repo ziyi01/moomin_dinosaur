@@ -6,8 +6,8 @@
 #include <pic32mx.h>  
 #include "game.h"
 
-struct Dino {
-    int dinoX;
-    int dinoY;
+typedef struct Moomin {
+    int moominX;
+    int moominY;
     int ySpeed;
 } Player;

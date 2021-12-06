@@ -11,6 +11,7 @@
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include "game.h"  /* Declarations for the game */
 #include "display.h" /* Declarations for the display */
+#include "structs.h"
 
 /*
   Uses getbtns() and getsw() from time4io to retrieve the status of
@@ -18,10 +19,12 @@
 */
 void checkButton() {
   volatile int btns = (volatile int) getbtns();
-  if(btns == 0) return; // Return if nothing is registered
+  if(btns == 0) 
+    return; // Return if nothing is registered
   
   if((btns & 0x1) == 1) {
-    //FILL
+
+    do_jump(0);
   } 
   if((btns & 0x2) == 2) {
     //FILL
@@ -38,16 +41,22 @@ void render() {
   render_background();
 }
 
-/*
-  The game loop
-*/
-void game() {
+
+
+void game_run(){
   checkButton();
-  timer();
+}
 
-  //To-Do: Make Game Logic
+//if button is pressed then do jump and erase regular moomin  
+void do_jump(y){
+  int i, j;
+  for(i = 60; i > 54; i--){
+        for(j = 24-y; j > 16-y; j--){
+            clear_pixel(i, j);
+        }
+    }
 
-  display_update();
+  render_moomin(10);
 }
 
 int main(void) {
@@ -58,9 +67,12 @@ int main(void) {
 	while( 1 )
 	{
     // Testing renders and timer
+    
     timer();
     clear_display();
     render();
+    render_moomin(0);
+    game_run();
     display_string(10, 1, "ABS");
     display_string(10, 2, itoaconv(score));
     delay(2);

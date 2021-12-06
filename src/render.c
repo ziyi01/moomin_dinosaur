@@ -8,8 +8,19 @@
 #include "game.h"
 #include "structs.h"
 
-void render_dino( struct Dino player ) {
-    //Gör dinosaurie baserat på X och Y
+void render_moomin(int y) {
+    int i, j;
+    /*for(i = player.moominX; i > player.moominX-8; i--){
+        for(j = player.moominY; j > player.moominY - 8; j--){
+            display_pixel(i, j);
+        }
+    }*/
+
+    for(i = 60; i > 54; i--){
+        for(j = 24-y; j > 16-y; j--){
+            display_pixel(i, j);
+        }
+    }
 }
 
 void render_background() {

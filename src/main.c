@@ -11,7 +11,23 @@
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include "game.h"  /* Declarations for the game */
 #include "display.h" /* Declarations for the display */
-#include "structs.h"
+
+/*
+  Create a fkn moomintroll
+*/
+Player troll = {
+  .moominX = 60,
+  .moominY = 30,
+  .ySpeed = 10
+};
+
+Player *pointer = &troll;
+
+//if button is pressed then do jump and erase regular moomin  
+void do_jump(int y){
+  clear_moomin(y);
+  render_moomin(y+8);
+}
 
 /*
   Uses getbtns() and getsw() from time4io to retrieve the status of
@@ -41,22 +57,8 @@ void render() {
   render_background();
 }
 
-
-
 void game_run(){
   checkButton();
-}
-
-//if button is pressed then do jump and erase regular moomin  
-void do_jump(y){
-  int i, j;
-  for(i = 60; i > 54; i--){
-        for(j = 24-y; j > 16-y; j--){
-            clear_pixel(i, j);
-        }
-    }
-
-  render_moomin(10);
 }
 
 int main(void) {
@@ -66,15 +68,13 @@ int main(void) {
 
 	while( 1 )
 	{
-    // Testing renders and timer
-    
+    // Testing renders and timer    
     timer();
     clear_display();
     render();
     render_moomin(0);
     game_run();
-    display_string(10, 1, "ABS");
-    display_string(10, 2, itoaconv(score));
+    display_string(10, 1, itoaconv(score));
     delay(2);
     display_update();
 	}

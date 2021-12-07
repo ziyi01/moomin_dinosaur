@@ -8,12 +8,6 @@
 
    For copyright and licensing, see file COPYING */
 
-/* Declare game-loop related functions */
-void game(void);
-void render(void);
-void init(void);
-void timer_init(void);
-
 /* Written as part of i/o lab: getbtns, getsw, enable_interrupt */
 int getbtns(void);
 int getsw(void);
@@ -32,3 +26,20 @@ char * itoaconv( int num );
 void timer(void);
 short timeoutcount;
 int score;
+
+/* Declare game-loop related functions */
+void game(void);
+void render(void);
+void init(void);
+void timer_init(void);
+
+/* Structs, constraints and entities in game*/
+int groundlvl;
+
+typedef struct Moomin {
+    int moominX;
+    int moominY;
+    int ySpeed;
+} Player;
+
+Player troll;

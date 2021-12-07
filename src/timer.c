@@ -20,22 +20,22 @@ void timer_init() {
 }
 
 void timer() {
-  if(score >= 9999) {
+  if(score >= 9999) { // Won't increment further than score = 9999
     T2CONCLR = 0x8000;
     return;
-  } else {
-    if(IFS(0) & 0x100) {
-      IFS(0) = IFS(0) & ~0x100; // Reset the flag
-      timeoutcount++;
-    } // Check if interrupted, flag status changed or not
-    
-    if(timeoutcount == 10) {
-      timeoutcount = 0;
-      IFS(0) = IFS(0) & ~0x100;
-      score++;  // Possibly change PERIOD and PR2 to speed score up
-    }
   }
-  
+
+  if(IFS(0) & 0x100) {
+    IFS(0) = IFS(0) & ~0x100; // Reset the flag
+    timeoutcount++;
+  } // Check if interrupted, flag status changed or not
+    
+  if(timeoutcount == 10) {
+    timeoutcount = 0;
+    IFS(0) = IFS(0) & ~0x100;
+    score++;  // Possibly change PERIOD and PR2 to speed score up
+  }
+
   return;
 }
 

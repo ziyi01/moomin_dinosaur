@@ -35,6 +35,7 @@ void timer() {
     IFS(0) = IFS(0) & ~0x100;
     score++;  // Possibly change PERIOD and PR2 to speed score up
   }
+
   return;
 }
 

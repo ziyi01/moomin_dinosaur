@@ -11,9 +11,11 @@
 #include "game.h"  /* Declarations for the game */
 #include "display.h" /* Declarations for the display */
 
+uint8_t* moomin = moominstand;
 int groundlvl = 30;
 int heightlvl = 22;
 bool game_start = true;
+bool game_over = false;
 bool jump = false;
 
 /*
@@ -46,7 +48,11 @@ void gravity() {
   }
 }
 
-// duck
+void duck() {
+  if(!jump) {
+    moomin = moominduck; 
+  }
+}
 
 /*
   Uses getbtns() and getsw() from time4io to retrieve the status of
@@ -61,7 +67,9 @@ void checkButton() {
     transition();
   } 
   if((btns & 0x2) == 2) {
-    //FILL
+    duck();
+    delay(10);
+    moomin = moominstand;
   }
   if((btns & 0x4) == 4 && !jump) {
     jump = true;
@@ -75,7 +83,7 @@ void checkButton() {
 void render() {
   clear_display();
   render_background();
-  render_moomintroll(); // testing my little boi
+  render_moominduck(); // testing my little boi
   display_string(8, 1, itoaconv(score));
 }
 
@@ -97,8 +105,10 @@ int main(void) {
 	{
     if( game_start ) {
       game_run();
-    } else if ( !game_start ) {
-      // 
+    } else if ( !game_start && !game_over ) {
+      // menu, enable start on button 1. Transition here
+    } else {
+      // game over, enable reset on button 1. Transition here
     }
 	}
 	return 0;

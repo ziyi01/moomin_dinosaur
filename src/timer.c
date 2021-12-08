@@ -13,6 +13,7 @@
 #define PERIOD (80000000 / (256 * 10)) //100 ms in clockrate 1:256
 
 short timeoutcount = 0;
+int counter = 0;
 int score = 0;
 
 /* Initializes the timer signals */
@@ -27,7 +28,6 @@ void timer_init() {
 /* Checks if timer has timed out and 1/2 second has passed */
 void timer() {
   if(score >= 9999) { // Won't increment further
-    T2CONCLR = 0x8000;
     return;
   }
 
@@ -40,6 +40,7 @@ void timer() {
     timeoutcount = 0;
     IFS(0) = IFS(0) & ~0x100;
     score++;  // Possibly change PERIOD and PR2 to speed score up
+    counter ++;
   }
 }
 

@@ -27,6 +27,7 @@ void timer(void);
 void timer_init(void);
 extern short timeoutcount;
 extern int score;
+extern int counter;
 
 /* Declare game-loop related functions */
 void do_jump(void);

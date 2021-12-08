@@ -40,6 +40,16 @@ void render_moomintroll() {
     }
 }
 
+void render_moominduck() {
+    int i, j;
+    for (i = 0; i < 2; i++) {
+        int yOff = (troll.moominY-8) / 8;
+        for(j = 0; j < 16; j++) {
+		    display[(i+yOff)*128+(j+(troll.moominX-16))] |= moominduck[i*16+j];
+        }
+    }
+}
+
 void render_menu() {
 
 }

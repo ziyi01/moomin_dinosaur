@@ -27,20 +27,19 @@ void timer_init() {
 
 /* Checks if timer has timed out and 1/2 second has passed */
 void timer() {
-  if(score >= 9999) { // Won't increment further
-    return;
-  }
-
   if(IFS(0) & 0x100) {
     IFS(0) = IFS(0) & ~0x100; // Reset the flag
     timeoutcount++;
     counter++;
   } // Check if interrupted, flag status changed or not
     
-  if(timeoutcount == 5) {
-    timeoutcount = 0;
-    IFS(0) = IFS(0) & ~0x100;
-    score++;  // Possibly change PERIOD and PR2 to speed score up
+  if(score < 9999) { // Won't increment further
+    if(timeoutcount == 5) {
+     timeoutcount = 0;
+      IFS(0) = IFS(0) & ~0x100;
+      score++;  // Possibly change PERIOD and PR2 to speed score up
+    }
+    return;
   }
 }
 

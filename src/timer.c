@@ -13,7 +13,6 @@
 #define PERIOD (80000000 / (256 * 10)) //100 ms in clockrate 1:256
 
 short timeoutcount = 0;
-int counter = 0;
 int score = 0;
 
 /* Initializes the timer signals */
@@ -35,14 +34,16 @@ void timer() {
       counter = 0;
     }
   } // Check if interrupted, flag status changed or not
-    
   if(score < 9999) { // Won't increment further
     if(timeoutcount == 5) {
      timeoutcount = 0;
       IFS(0) = IFS(0) & ~0x100;
       score++;  // Possibly change PERIOD and PR2 to speed score up
     }
-    return;
+  } else {
+    if(timeoutcount == 5) {
+      timeoutcount = 0;
+    }
   }
 }
 

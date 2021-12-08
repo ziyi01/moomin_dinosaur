@@ -21,6 +21,9 @@ bool game_over = false;
 bool jump = false;
 bool duck = false;
 
+int accel = 1;
+int vel = 0;
+
 /*
   Create a moomintroll
 */
@@ -36,25 +39,18 @@ Blob obstacle = {
 };
 
 /*
-  If button is pressed then do jump and erase regular moomin
+  If button is pressed then do jump
 */
 void do_jump(){
-  // Set some constraint
   jump = true;
-  //troll.ySpeed = -1;
 }
 
+  vel = -4;
 void gravity() {
- /* troll.moominY += troll.ySpeed;
-        if(troll.moominY < 15) {
-          troll.ySpeed = 1;
-        } else if(troll.moominY >= groundlvl) {
-          troll.ySpeed = 0;
-          jump = false;
-          }*/
-
-  
-
+  if(vel != 0) {
+    vel += accel;
+    troll.moominY += vel; 
+  }
 }
 
 void do_duck() {

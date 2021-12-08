@@ -19,6 +19,9 @@ bool game_over = false;
 bool jump = false;
 bool duck = false;
 
+int accel = 1;
+int vel = 0;
+
 /*
   Create a moomintroll
 */
@@ -31,22 +34,17 @@ Player troll = {
 Player *pointer = &troll;
 
 /*
-  If button is pressed then do jump and erase regular moomin
+  If button is pressed then do jump
 */
 void do_jump(){
-  // Set some constraint
   jump = true;
-  troll.ySpeed = -1;
+  vel = -4;
 }
 
 void gravity() {
-  troll.moominY += troll.ySpeed;
-  
-  if(troll.moominY <= heightlvl) {
-    troll.ySpeed = 1;
-  } else if(troll.moominY >= groundlvl) {
-    troll.ySpeed = 0;
-    jump = false;
+  if(vel != 0) {
+    vel += accel;
+    troll.moominY += vel; 
   }
 }
 
@@ -83,16 +81,16 @@ void checkButton() {
 void render() {
   clear_display();
   render_background();
-  render_moomintroll();
-  display_string(8, 1, itoaconv(counter));
+  display_string(8, 1, itoaconv(timeoutcount)); // Change to score later
 }
 
 void game_run(){
   timer();
   checkButton();
-  if(counter % 2 == 0) {
+  if(timeoutcount == 0) {
     gravity();
   }
+  render_moomintroll();
 }
 
 int main(void) {

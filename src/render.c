@@ -50,6 +50,16 @@ void render_moominduck() {
     }
 }
 
+void render_obstacle(){
+    int i, j;
+    for (i = obstacle.obsX; i < obstacle.obsX+8; i ++){
+        for(j = obstacle.obsY; j > 22; j--){
+            display_pixel(i, j);
+        }
+    }
+    
+}
+
 void render_menu() {
 
 }

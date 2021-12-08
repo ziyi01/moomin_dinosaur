@@ -31,6 +31,9 @@ void timer() {
     IFS(0) = IFS(0) & ~0x100; // Reset the flag
     timeoutcount++;
     counter++;
+    if(counter == 5) {
+      counter = 0;
+    }
   } // Check if interrupted, flag status changed or not
     
   if(score < 9999) { // Won't increment further

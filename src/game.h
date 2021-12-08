@@ -17,6 +17,7 @@ int rand(int low, int high); // TO-DO: IMPLEMENT RANDOMIZER
 
 /* Declare render and character */
 void render_moomin(void);
+void render_obstacle(void);
 void clear_moomin(void);
 void render_background(void);
 void transition(void);
@@ -48,6 +49,13 @@ typedef struct Moomin {
 } Player;
 
 Player troll;
+
+typedef struct Obstacle {
+    int obsX;
+    int obsY;
+} Blob;
+
+Blob obstacle;
 
 /* Boolean type definition */
 

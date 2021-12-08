@@ -1,33 +1,52 @@
-/* main.c
+/*  main.c
 
-   This file written 2015 by Axel Isaksson,
-   modified 2015, 2017 by F Lundevall
+    This file written 2021 by Julia Wang & Amanda Hallstedt,
+    
+    For copyright and licensing, see file COPYING
 
-   Latest update 2017-04-21 by F Lundevall
-
-   For copyright and licensing, see file COPYING */
+*/
 
 #include <stdint.h>   /* Declarations of uint_32 and the like */
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include "game.h"  /* Declarations for the game */
 #include "display.h" /* Declarations for the display */
 
+int groundlvl = 30;
+int heightlvl = 22;
+bool game_start = true;
+bool jump = false;
+
 /*
-  Create a fkn moomintroll
+  Create a moomintroll
 */
 Player troll = {
-  .moominX = 60,
+  .moominX = 50,
   .moominY = 30,
-  .ySpeed = 10
+  .ySpeed = 0
 };
 
 Player *pointer = &troll;
 
-//if button is pressed then do jump and erase regular moomin  
-void do_jump(int y){
-  clear_moomin(y);
-  render_moomin(y+8);
+/*
+  If button is pressed then do jump and erase regular moomin
+*/
+void do_jump(){
+  // Set some constraint
+  troll.ySpeed = -1;
 }
+
+void gravity() {
+  troll.moominY += troll.ySpeed;
+  
+  if(troll.moominY <= heightlvl) {
+    troll.ySpeed = 1;
+  } else if(troll.moominY >= groundlvl) {
+    troll.ySpeed = 0;
+    jump = false;
+  }
+}
+
+// duck
 
 /*
   Uses getbtns() and getsw() from time4io to retrieve the status of
@@ -39,14 +58,14 @@ void checkButton() {
     return; // Return if nothing is registered
   
   if((btns & 0x1) == 1) {
-
-    do_jump(0);
+    transition();
   } 
   if((btns & 0x2) == 2) {
     //FILL
   }
-  if((btns & 0x4) == 4) {
-    transition();
+  if((btns & 0x4) == 4 && !jump) {
+    jump = true;
+    do_jump();
   }
 }
 
@@ -54,11 +73,19 @@ void checkButton() {
   Activate render functions
 */
 void render() {
+  clear_display();
   render_background();
+  render_moomintroll(); // testing my little boi
+  display_string(8, 1, itoaconv(score));
 }
 
 void game_run(){
+  timer();
+  render();
   checkButton();
+  gravity();
+  delay(5);
+  display_update();
 }
 
 int main(void) {
@@ -68,15 +95,11 @@ int main(void) {
 
 	while( 1 )
 	{
-    // Testing renders and timer    
-    timer();
-    clear_display();
-    render();
-    render_moomin(0);
-    game_run();
-    display_string(10, 1, itoaconv(score));
-    delay(2);
-    display_update();
+    if( game_start ) {
+      game_run();
+    } else if ( !game_start ) {
+      // 
+    }
 	}
 	return 0;
 }

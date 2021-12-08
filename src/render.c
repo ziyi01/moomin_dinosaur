@@ -1,40 +1,51 @@
-/* render.c
+/*  render.c
 
+    This file written 2021 by Julia Wang & Amanda Hallstedt,
+    
+    For copyright and licensing, see file COPYING
 
 */
 
 #include <stdint.h>   
 #include <pic32mx.h>  
 #include "game.h"
+#include "display.h"
 
-void render_moomin(int y) {
+/* Moomin render-functions*/
+void render_moomin() {
     int i, j;
     for(i = troll.moominX; i > troll.moominX-16; i--){
-        for(j = troll.moominY-y; j > troll.moominY - y - 16; j--){
+        for(j = troll.moominY; j > troll.moominY - 16; j--){
             display_pixel(i, j);
         }
     }
-
-   /* for(i = 60; i > 44; i--){
-        for(j = groundlvl-y; j > (groundlvl-16)-y; j--){
-            display_pixel(i, j);
-        }
-    }*/
 }
 
-void clear_moomin(int y){
+void clear_moomin(){
     int i, j;
     for(i = troll.moominX; i > troll.moominX-16; i--){
-        for(j = troll.moominY-y; j > troll.moominY - y - 16; j--){
+        for(j = troll.moominY; j > troll.moominY - 16; j--){
             clear_pixel(i, j);
         }
     }
 }
 
+void render_moomintroll() {
+    int i, j;
+    for (i = 0; i < 2; i++) {
+        int yOff = (troll.moominY-8) / 8;
+        for(j = 0; j < 16; j++) {
+		    display[(i+yOff)*128+(j+(troll.moominX-16))] |= moomin[i*16+j];
+        }
+    }
+}
+
+void render_menu() {
+
+}
 
 void render_background() {
     int i, j;
-    groundlvl = 30;
     
     /* Horizontal lines */
     for(i = 0; i < 128; i ++) {
@@ -55,10 +66,6 @@ void render_background() {
 
     /* Misc. details */
     // Frame
-}
-
-int get_groundlvl(){
-    return groundlvl;
 }
 
 void transition() {

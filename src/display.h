@@ -5,6 +5,8 @@
 /* Declare bitmap array containing the display */
 extern uint8_t display[512]; // 4 rows of 128 8 bits values
 extern uint8_t font[185]; // Contains characters
+extern uint8_t moomin[2*16];
+extern uint8_t moominduck[2*16];
 
 /* Declare display-related functions from display */
 void display_init(void);

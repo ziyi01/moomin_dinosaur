@@ -1,16 +1,21 @@
+/* timer.c
+
+    This file written 2021 by Julia Wang,
+    
+    For copyright and licensing, see file COPYING
+
+*/
 
 #include <stdint.h>  
 #include <pic32mx.h> 
 #include "game.h"
 
 #define PERIOD (80000000 / (256 * 10)) //100 ms in clockrate 1:256
-#if PERIOD > 0xffff
-#error "Timer-period-is-too-big."
-#endif
 
 short timeoutcount = 0;
 int score = 0;
 
+/* Initializes the timer signals */
 void timer_init() {
     // Prescaling: 80 * 10^6 / 256 * 10 = 31250 ticks/ 100 ms
     T2CON = 0x70; // Sets the prescaling and also sets the module off (to reset)
@@ -19,8 +24,9 @@ void timer_init() {
     T2CONSET = 0x8000; // Start Timer2
 }
 
+/* Checks if timer has timed out and 1/2 second has passed */
 void timer() {
-  if(score >= 9999) { // Won't increment further than score = 9999
+  if(score >= 9999) { // Won't increment further
     T2CONCLR = 0x8000;
     return;
   }
@@ -30,13 +36,11 @@ void timer() {
     timeoutcount++;
   } // Check if interrupted, flag status changed or not
     
-  if(timeoutcount == 10) {
+  if(timeoutcount == 5) {
     timeoutcount = 0;
     IFS(0) = IFS(0) & ~0x100;
     score++;  // Possibly change PERIOD and PR2 to speed score up
   }
-
-  return;
 }
 
 /*

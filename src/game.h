@@ -1,40 +1,44 @@
 /* game.h
    Header file for the game
    
-   This file written 2015 by F Lundevall
-   Some parts are original code written by Axel Isaksson
+   This file written 2021 by Julia Wang & Amanda Hallstedt
 
-   Latest update 
+   For copyright and licensing, see file COPYING
+*/
 
-   For copyright and licensing, see file COPYING */
-
-/* Written as part of i/o lab: getbtns, getsw, enable_interrupt */
+/* Written as part of i/o lab: getbtns, getsw, enable_interrupt in functions.c */
 int getbtns(void);
 int getsw(void);
-void checkButton(void);
 void enable_interrupt(void);
 void delay(int);
 void user_isr(void);
-void tickLED(short);
+void init(void);
+int rand(int low, int high); // TO-DO: IMPLEMENT RANDOMIZER
 
 /* Declare render and character */
-void render_dino();
-void render_background();
+void render_moomin(void);
+void clear_moomin(void);
+void render_background(void);
+void transition(void);
 
 /* Timer */
-char * itoaconv( int num );
+char * itoaconv(int num);
 void timer(void);
-short timeoutcount;
-int score;
+void timer_init(void);
+extern short timeoutcount;
+extern int score;
 
 /* Declare game-loop related functions */
-void game(void);
+void do_jump(void);
+void gravity(void);
+void do_duck(void);
 void render(void);
-void init(void);
-void timer_init(void);
+void checkButton(void);
+void game_run(void);
 
 /* Structs, constraints and entities in game*/
 int groundlvl;
+int heightlvl;
 
 typedef struct Moomin {
     int moominX;
@@ -43,3 +47,10 @@ typedef struct Moomin {
 } Player;
 
 Player troll;
+
+/* Boolean type definition */
+
+typedef enum boolean {
+    false,
+    true
+} bool;

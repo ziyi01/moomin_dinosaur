@@ -33,8 +33,9 @@ void clear_moomin(){
 void render_moomintroll() {
     int i, j;
     for (i = 0; i < 2; i++) {
+        int yOff = (troll.moominY-8) / 8;
         for(j = 0; j < 16; j++) {
-		    display[(i+2)*128+(j+20)] |= moomin[i*16+j];
+		    display[(i+yOff)*128+(j+(troll.moominX-16))] |= moomin[i*16+j];
         }
     }
 }

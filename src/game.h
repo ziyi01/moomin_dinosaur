@@ -25,8 +25,8 @@ void transition(void);
 char * itoaconv(int num);
 void timer(void);
 void timer_init(void);
-short timeoutcount;
-int score;
+extern short timeoutcount;
+extern int score;
 
 /* Declare game-loop related functions */
 void do_jump(void);

@@ -34,13 +34,13 @@ void timer() {
   if(IFS(0) & 0x100) {
     IFS(0) = IFS(0) & ~0x100; // Reset the flag
     timeoutcount++;
+    counter++;
   } // Check if interrupted, flag status changed or not
     
   if(timeoutcount == 5) {
     timeoutcount = 0;
     IFS(0) = IFS(0) & ~0x100;
     score++;  // Possibly change PERIOD and PR2 to speed score up
-    counter ++;
   }
 }
 

@@ -17,6 +17,7 @@ int heightlvl = 22;
 bool game_start = true;
 bool game_over = false;
 bool jump = false;
+bool duck = false;
 
 /*
   Create a moomintroll
@@ -34,6 +35,7 @@ Player *pointer = &troll;
 */
 void do_jump(){
   // Set some constraint
+  jump = true;
   troll.ySpeed = -1;
 }
 
@@ -48,9 +50,10 @@ void gravity() {
   }
 }
 
-void duck() {
+void do_duck() {
   if(!jump) {
     moomin = moominduck; 
+    duck = true;
   }
 }
 
@@ -67,12 +70,9 @@ void checkButton() {
     transition();
   } 
   if((btns & 0x2) == 2) {
-    duck();
-    delay(10);
-    moomin = moominstand;
+    do_duck();
   }
   if((btns & 0x4) == 4 && !jump) {
-    jump = true;
     do_jump();
   }
 }
@@ -83,17 +83,16 @@ void checkButton() {
 void render() {
   clear_display();
   render_background();
-  render_moominduck(); // testing my little boi
-  display_string(8, 1, itoaconv(score));
+  render_moomintroll();
+  display_string(8, 1, itoaconv(counter));
 }
 
 void game_run(){
   timer();
-  render();
   checkButton();
-  gravity();
-  delay(5);
-  display_update();
+  if(counter % 2 == 0) {
+    gravity();
+  }
 }
 
 int main(void) {
@@ -104,7 +103,9 @@ int main(void) {
 	while( 1 )
 	{
     if( game_start ) {
+      render();
       game_run();
+      display_update();
     } else if ( !game_start && !game_over ) {
       // menu, enable start on button 1. Transition here
     } else {

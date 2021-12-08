@@ -1,6 +1,6 @@
 /* display.c
-   This file written 2015 by F Lundevall
-   Some parts are original code written by Axel Isaksson
+   This file written 2021 by Julia Wang
+   Some parts are original code written by Axel Isaksson and F Lundevall
 
    For copyright and licensing, see file COPYING */
 
@@ -39,8 +39,10 @@ void quicksleep(int cyc) {
 	See Family Data Sheet SPI1-2 Registers and Serial Peripheral Interface.
 */
 uint8_t spi_send_recv(uint8_t data) {
-	// Checks for SPIRBF = 1, SPITBE = 0
-	// SPIRBF = SPI Receive Buffer, SPITBE = Transmit Buffer Empty
+	/*
+		Checks for SPIRBF = 1, SPITBE = 0
+		SPIRBF = SPI Receive Buffer, SPITBE = Transmit Buffer Empty
+	 */
 	while(!(SPI2STAT & 0x08));
 	SPI2BUF = data;
 	while(!(SPI2STAT & 1)); // If buffer has not received, wait till done
@@ -65,7 +67,7 @@ void clear_pixel(int x, int y) {
 	}
 }
 
-//Smått stulen
+/* Displays a string by converting a string with a font-array to the display-array */
 void display_string(int x, int line, char* string) {
 	const char* i;
 	int j;
@@ -99,6 +101,7 @@ void display_string(int x, int line, char* string) {
 	}
 }
 
+/* Clears the whole display */
 void clear_display() {
 	int i;
 	for(i = 0; i < ARRAY_SIZE; i ++) {
@@ -106,9 +109,7 @@ void clear_display() {
 	}
 }
 
-/*  display_update
-	Send the data array to the render buffer
-*/
+/* Sends the display-array through the SPI protocol to the Shield Display */
 void display_update(void) {
 	int i, j;
 	for(i = 0; i < ARRAY_SIZE; i++) {

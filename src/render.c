@@ -40,24 +40,13 @@ void render_moomintroll() {
     }
 }
 
-void render_moominduck() {
-    int i, j;
-    for (i = 0; i < 2; i++) {
-        int yOff = (troll.moominY-8) / 8;
-        for(j = 0; j < 16; j++) {
-		    display[(i+yOff)*128+(j+(troll.moominX-16))] |= moominduck[i*16+j];
-        }
-    }
-}
-
 void render_obstacle(){
     int i, j;
     for (i = obstacle.obsX; i < obstacle.obsX+8; i ++){
-        for(j = obstacle.obsY; j > 22; j--){
+        for(j = obstacle.obsY; j > obstacle.obsY-8; j--){
             display_pixel(i, j);
         }
-    }
-    
+    }    
 }
 
 void render_menu() {
@@ -91,8 +80,8 @@ void render_background() {
 void transition() {
     int i,j;
     for(i = 0; i < 126; i ++) {
-        clear_display();
         for(j = 0; j < 32; j ++) {
+            clear_pixel(i-1, j);
             display_pixel(i, j);
             display_pixel(i+2, j);
             display_pixel(i+4, j);

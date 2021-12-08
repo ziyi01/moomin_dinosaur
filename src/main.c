@@ -15,7 +15,7 @@ uint8_t* moomin = moominstand;
 int groundlvl = 30;
 int heightlvl = 22;
 int inAir = 0;
-  int ducked = 0;
+int ducked = 0;
 bool game_start = true;
 bool game_over = false;
 bool jump = false;
@@ -30,9 +30,9 @@ Player troll = {
   .ySpeed = 0
 };
 
-Blob object = {
+Blob obstacle = {
   .obsX = 70,
-  .obsY = 30
+  .obsY = 30,
 };
 
 /*
@@ -91,8 +91,7 @@ void render() {
   clear_display();
   render_background();
   render_moomintroll();
-  render_obstacle();
-  display_string(8, 1, itoaconv(counter));
+  display_string(8, 1, itoaconv(score));
 }
 
 void game_run(){
@@ -139,6 +138,7 @@ int main(void) {
 	{
     if( game_start ) {
       render();
+      render_obstacle();
       game_run();
 
       //collision check?????

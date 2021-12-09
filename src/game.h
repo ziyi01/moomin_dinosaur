@@ -68,5 +68,5 @@ typedef enum game {
 } game_state;
 
 /* Scoreboard & Menu */
-char* scorename[3];
+char scorename[3];
 int scoreboard[3];

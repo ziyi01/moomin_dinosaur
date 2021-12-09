@@ -12,24 +12,6 @@
 #include "display.h"
 
 /* Moomin render-functions*/
-void render_moomin() {
-    int i, j;
-    for(i = troll.moominX; i > troll.moominX-16; i--){
-        for(j = troll.moominY; j > troll.moominY - 16; j--){
-            display_pixel(i, j);
-        }
-    }
-}
-
-void clear_moomin(){
-    int i, j;
-    for(i = troll.moominX; i > troll.moominX-16; i--){
-        for(j = troll.moominY; j > troll.moominY - 16; j--){
-            clear_pixel(i, j);
-        }
-    }
-}
-
 void render_moomintroll() {
     int i, j;
     for (i = 0; i < 2; i++) {
@@ -40,13 +22,21 @@ void render_moomintroll() {
     }
 }
 
-void render_obstacle(){
+void render_obstacle2(){
     int i, j;
     for (i = obstacle.obsX; i < obstacle.obsX+8; i ++){
         for(j = obstacle.obsY; j > obstacle.obsY-8; j--){
             display_pixel(i, j);
         }
     }    
+}
+
+void render_obstacle() {
+    int i;
+    int yOff = obstacle.obsY / 8;
+    for(i = 0; i < 8; i++) {
+		display[yOff*128+(obstacle.obsX+i)] |= hattifnatt[i];
+    }
 }
 
 void render_menu() {

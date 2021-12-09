@@ -28,7 +28,6 @@ void timer(void);
 void timer_init(void);
 extern short timeoutcount;
 extern int score;
-extern int counter;
 
 /* Declare game-loop related functions */
 void do_jump(void);
@@ -38,9 +37,7 @@ void render(void);
 void checkButton(void);
 void game_run(void);
 
-/* Structs, constraints and entities in game*/
-int groundlvl;
-int heightlvl;
+/* Type definitions in game*/
 
 typedef struct Moomin {
     int moominX;
@@ -58,8 +55,18 @@ typedef struct Obstacle {
 Blob obstacle;
 
 /* Boolean type definition */
-
 typedef enum boolean {
     false,
     true
 } bool;
+
+typedef enum game {
+    game_menu,
+    game_start,
+    game_over,
+    game_score
+} game_state;
+
+/* Scoreboard & Menu */
+char* scorename[3];
+int scoreboard[3];

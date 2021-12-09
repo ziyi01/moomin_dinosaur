@@ -16,13 +16,14 @@ int groundlvl = 30;
 int heightlvl = 22;
 int inAir = 0;
 int ducked = 0;
-bool game_start = true;
-bool game_over = false;
+game_state state = 0; // 0 = is menu/start
 bool jump = false;
 bool duck = false;
 
+char ascii = 65;
+
 /*
-  Create a moomintroll
+  Create entities
 */
 Player troll = {
   .moominX = 50,
@@ -39,22 +40,9 @@ Blob obstacle = {
   If button is pressed then do jump and erase regular moomin
 */
 void do_jump(){
-  // Set some constraint
-  jump = true;
-  //troll.ySpeed = -1;
-}
-
-void gravity() {
- /* troll.moominY += troll.ySpeed;
-        if(troll.moominY < 15) {
-          troll.ySpeed = 1;
-        } else if(troll.moominY >= groundlvl) {
-          troll.ySpeed = 0;
-          jump = false;
-          }*/
-
-  
-
+  if(!duck) {
+    jump = true;
+  }
 }
 
 void do_duck() {
@@ -74,13 +62,44 @@ void checkButton() {
     return; // Return if nothing is registered
   
   if((btns & 0x1) == 1) {
-    transition();
+
   } 
   if((btns & 0x2) == 2) {
     do_duck();
+  } else {
+    duck = false;
   }
-  if((btns & 0x4) == 4 && !jump) {
-    do_jump();
+  if((btns & 0x4) == 4) {
+    if(!jump) {
+      do_jump();
+    }
+  }
+}
+
+void checkButton_menu() {
+  volatile int btns = (volatile int) getbtns();
+
+  if((btns & 0x4) == 4) {
+    transition();
+    state = game_start;
+  }
+}
+
+/*
+  Uses getbtns() and getsw() from time4io to retrieve the status of
+  the Switches and Buttons 2-4 to update the time on display.
+*/
+void checkButton_scoreboard() {
+  volatile int btns = (volatile int) getbtns();
+  if(btns == 0) 
+    return; // Return if nothing is registered
+  
+  if((btns & 0x2) == 2) {
+    transition();
+    state = game_score;
+  }
+  if((btns & 0x4) == 4) {
+    ascii ++;
   }
 }
 
@@ -103,7 +122,7 @@ void game_run(){
   a counter for how long the boi has been in the air. One could easily switch out
   "40" for a variable like "airTime" and then be able to change it easier*/
 void jumping(){
-  if(counter == 0 && jump) {
+  if(timeoutcount == 0 && jump) {
         if (inAir < 40){
           troll.moominY = heightlvl;
         }
@@ -121,7 +140,7 @@ void jumping(){
 /*checking for duck and keep moomin on the ground using the same logic as in jumping(), but
   with variable "duck".*/
 void ducking(){
-  if (counter == 0 && duck){
+  if (timeoutcount == 0 && duck){
         if(ducked == 50){
           moomin = moominstand;
           ducked = 0;
@@ -136,25 +155,36 @@ int main(void) {
   timer_init();
 	while( 1 )
 	{
-    if( game_start ) {
-      render();
-      render_obstacle();
-      game_run();
+    switch(state) {
+      case 0:
+        checkButton_menu();
+        display_string(20, 1, "Press button");
+        display_string(30, 2, "to start!");
+      break;
+      case 1:
+        render();
+        render_obstacle();
+        game_run();
 
-      //collision check?????
-      if (counter == 0){
-        //alltså checka för om vår moomin befinner sig på samma pixel
-        //som en annan struct
-      }
-      jumping();
-      ducking();
-      
-      display_update();
-    } else if ( !game_start && !game_over ) {
-      // menu, enable start on button 1. Transition here
-    } else {
-      // game over, enable reset on button 1. Transition here
+        //collision check?????
+        if (timeoutcount == 0){
+          //alltså checka för om vår moomin befinner sig på samma pixel
+          //som en annan struct
+        }
+        jumping();
+        ducking();
+      break;
+      case 2:
+        checkButton_scoreboard();
+        display_string(100, 1, &ascii);
+        display_string(112, 1, itoaconv(score));
+      break;
+      case 3:
+      break;
+      default:
+      display_string(10, 1, "ERROR: STATE");
     }
+    display_update();
 	}
 	return 0;
 }

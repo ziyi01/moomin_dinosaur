@@ -78,8 +78,9 @@ void checkButton() {
 
 void checkButton_menu() {
   volatile int btns = (volatile int) getbtns();
-
-  if((btns & 0x4) == 4) {
+  if(btns == 0) { 
+    return; // Return if nothing is registered
+  } else {
     transition();
     state = game_start;
   }
@@ -180,6 +181,7 @@ int main(void) {
         display_string(112, 1, itoaconv(score));
       break;
       case 3:
+        // DISPLAY SCOREBOARD, save ascii in array by comparing score, also save score of course then 
       break;
       default:
       display_string(10, 1, "ERROR: STATE");

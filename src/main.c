@@ -18,6 +18,7 @@ int inAir = 0;
 int ducked = 0;
 int ground_move = 0;
 int roof_move = -300;
+int restarted = 0;
 game_state state = 0; // 0 = is menu/start
 bool jump = false;
 bool duck = false;
@@ -129,6 +130,7 @@ void checkButton_scoreboard() {
   if(btns == 0) 
     return; // Return if nothing is registered
   
+  
   if((btns & 0x2) == 2) {
     transition();
     set_score();
@@ -141,6 +143,17 @@ void checkButton_scoreboard() {
       ascii = 65;
     }
     delay(100);
+  }
+}
+
+void checkButton_showingscore() {
+  volatile int btns = (volatile int) getbtns();
+  if(btns == 0) { 
+    return; // Return if nothing is registered
+  } else {
+    transition();
+    restarted = 1;
+    state = 0;
   }
 }
 
@@ -221,6 +234,13 @@ void collision(){
   }
 }
 
+void game_reset(){
+  troll.moominY = groundlvl;
+  obstacle.obsX= 127;
+  roofobstacle.obsX = 127;
+  roof_move = -300;
+}
+
 int main(void) {
 	init();
 	display_init();
@@ -235,6 +255,10 @@ int main(void) {
         display_string(30, 2, "to start!");
       break;
       case 1:
+        if(restarted == 1){
+          restarted = 0;
+          game_reset();
+        }
         render();
         game_run();
         move_ground();
@@ -256,6 +280,7 @@ int main(void) {
       case 3:
         // DISPLAY SCOREBOARD, save ascii in array by comparing score, also save score of course then
         show_scoreboard(); 
+        checkButton_showingscore();
       break;
       default:
       display_string(10, 1, "ERROR: STATE");

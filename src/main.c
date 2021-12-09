@@ -13,9 +13,11 @@
 
 uint8_t* moomin = moominstand;
 int groundlvl = 30;
-int heightlvl = 22;
+int heightlvl = 20;
 int inAir = 0;
 int ducked = 0;
+int ground_move = 0;
+int roof_move = -300;
 game_state state = 0; // 0 = is menu/start
 bool jump = false;
 bool duck = false;
@@ -32,8 +34,13 @@ Player troll = {
 };
 
 Blob obstacle = {
-  .obsX = 70,
+  .obsX = 120,
   .obsY = 30,
+};
+
+Blob roofobstacle = {
+  .obsX = 120,
+  .obsY = 8,
 };
 
 /*
@@ -144,6 +151,7 @@ void render() {
   render_background();
   render_moomintroll();
   display_string(8, 1, itoaconv(score));
+  render_obstacle();
 }
 
 void game_run(){
@@ -182,6 +190,37 @@ void ducking(){
       }
 }
 
+//move obstacle, to change speed change the value in first statement 
+void move_ground(){
+        if(ground_move == 6){
+          obstacle.obsX --;
+          ground_move = 0;
+        }
+        else if(obstacle.obsX == 0 ){
+          obstacle.obsX = 127;
+        }
+        ground_move ++;
+}
+
+void move_roof(){
+  if(roof_move == 6){
+          roofobstacle.obsX --;
+          roof_move = 0;
+        }
+        else if(roofobstacle.obsX == 0 ){
+          roofobstacle.obsX = 127;
+        }
+        roof_move ++;
+}
+
+void collision(){
+  if(troll.moominX-1 == obstacle.obsX && troll.moominY == obstacle.obsY){
+    state = game_over;
+  }else if(troll.moominX-1 == roofobstacle.obsX && troll.moominY  != groundlvl){
+    state = game_over;
+  }
+}
+
 int main(void) {
 	init();
 	display_init();
@@ -197,16 +236,15 @@ int main(void) {
       break;
       case 1:
         render();
-        render_obstacle();
         game_run();
-
-        //collision check?????
-        if (timeoutcount == 0){
-          //alltså checka för om vår moomin befinner sig på samma pixel
-          //som en annan struct
-        }
+        move_ground();
+        move_roof();
+        collision();
+        
         jumping();
         ducking();
+
+
       break;
       case 2:
         checkButton_scoreboard();

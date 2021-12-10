@@ -81,7 +81,7 @@ typedef enum game {
 } game_state;
 
 /* Game state */
-char scorename[3];
+char scorename[3*3];
 int scoreboard[3];
 
 int restarted;
@@ -89,3 +89,4 @@ game_state state;
 bool jump;
 bool duck;
 char ascii;
+int roof_move;

@@ -7,6 +7,13 @@
 #include "display.h"
 
 char ascii = 65;
+int character = 0;
+
+int scoreboard[3] = { 0, 0, 0 };
+char temp_score;
+char score1;
+char score2;
+char score3;
 
 /* Inputs the ascii and the number into the arrays for the scoreboard */
 void update_highscore() {
@@ -24,22 +31,34 @@ void update_highscore() {
   }
 }
 
+void game_reset(){
+  obstacle.obsX= 127;
+  roofobstacle.obsX = 120;
+  score = 0;
+}
+
 void render_scoreboard() {
   display_string(20, 1, &scorename[0]);
-  display_string(32, 1, itoaconv(scoreboard[0])); 
+  display_string(80, 1, itoaconv(scoreboard[0])); 
   
   display_string(20, 2, &scorename[1]);
-  display_string(32, 2, itoaconv(scoreboard[1]));
+  display_string(80, 2, itoaconv(scoreboard[1]));
   
   display_string(20, 3, &scorename[2]);
-  display_string(32, 3, itoaconv(scoreboard[2]));
+  display_string(80, 3, itoaconv(scoreboard[2]));
 }
 
 void render_over() {
-    display_string(50, 1, "Name:");
-    display_string(90, 1, &ascii);
-    display_string(50, 2, "Score:");
-    display_string(90, 2, itoaconv(score));
+    display_string(20, 1, "Name:");
+    display_string(80+(character*7), 1, &ascii);
+    display_string(20, 2, "Score:");
+    display_string(80, 2, itoaconv(score));
+
+    if(character == 1) {
+      display_string(80, 1, &scorename[0]);
+    } else if(character == 2) {
+      display_string(87, 1, &scorename[1]);
+    }
 }
 
 void checkButton_scoreboard() {
@@ -49,17 +68,21 @@ void checkButton_scoreboard() {
   
   
   if((btns & 0x2) == 2) {
-    transition();
-    update_highscore();
-    state = game_score; 
+    character++;
+    scorename[character] = ascii;
     ascii = 65;
+    if(character == 2) {
+      transition();
+      update_highscore();
+      state = game_score; 
+    }
   }
   if((btns & 0x4) == 4) {
     ascii ++;
     if(ascii > 90) {
       ascii = 65;
     }
-    delay(100);
+    delay(200);
   }
 }
 
@@ -69,8 +92,9 @@ void checkButton_showingscore() {
     return; // Return if nothing is registered
   } else {
     transition();
-    restarted = 1;
+    game_reset();
     state = 0;
+    roof_move = -340;
   }
 }
 
@@ -81,6 +105,7 @@ void set_score() {
   checkButton_scoreboard();
 }
 
+// DISPLAY SCOREBOARD, save ascii in array by comparing score, also save score of course then
 void show_score() {
   render_scoreboard(); 
   checkButton_showingscore();

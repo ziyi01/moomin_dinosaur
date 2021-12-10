@@ -53,6 +53,7 @@ typedef struct Obstacle {
 } Blob;
 
 Blob obstacle;
+Blob roofobstacle;
 
 /* Boolean type definition */
 typedef enum boolean {

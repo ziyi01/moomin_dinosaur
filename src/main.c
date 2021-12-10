@@ -17,7 +17,7 @@ int heightlvl = 20;
 int inAir = 0;
 int ducked = 0;
 int ground_move = 0;
-int roof_move = -300;
+int roof_move = -340;
 int restarted = 0;
 game_state state = 0; // 0 = is menu/start
 bool jump = false;
@@ -235,10 +235,9 @@ void collision(){
 }
 
 void game_reset(){
-  troll.moominY = groundlvl;
   obstacle.obsX= 127;
-  roofobstacle.obsX = 127;
-  roof_move = -300;
+  roofobstacle.obsX = 120;
+  score = 0;
 }
 
 int main(void) {
@@ -258,6 +257,7 @@ int main(void) {
         if(restarted == 1){
           restarted = 0;
           game_reset();
+          roof_move = -340;
         }
         render();
         game_run();

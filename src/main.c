@@ -82,21 +82,6 @@ void checkButton() {
   }
 }
 
-/*
-  Activate render functions when game is running
-*/
-void render() {
-  render_background();
-  render_moomintroll();
-  display_string(8, 1, itoaconv(score));
-  render_obstacle();
-}
-
-void game_run(){
-  timer();
-  checkButton();
-}
-
 /*checking jump and making sure moomin stays in the air by basically using
   a counter for how long the boi has been in the air. One could easily switch out
   "40" for a variable like "airTime" and then be able to change it easier*/
@@ -159,10 +144,27 @@ void collision(){
   }
 }
 
-void game_reset(){
-  obstacle.obsX= 127;
-  roofobstacle.obsX = 120;
-  score = 0;
+/*
+  Activate render functions when game is running
+*/
+void render() {
+  render_background();
+  render_moomintroll();
+  display_string(8, 1, itoaconv(score));
+  render_obstacle();
+}
+
+void game_run(){
+  render();
+  timer();
+  checkButton();
+
+  move_ground();
+  move_roof();
+  collision();
+        
+  jumping();
+  ducking();  
 }
 
 int main(void) {
@@ -180,26 +182,12 @@ int main(void) {
         menu_screen();
       break;
       case 1:
-        if(restarted == 1){
-          restarted = 0;
-          game_reset();
-          roof_move = -340;
-        }
-        render();
         game_run();
-        move_ground();
-        move_roof();
-        collision();
-        
-        jumping();
-        ducking();
-
       break;
       case 2:
         set_score();
       break;
       case 3:
-        // DISPLAY SCOREBOARD, save ascii in array by comparing score, also save score of course then
         show_score();
       break;
       default:

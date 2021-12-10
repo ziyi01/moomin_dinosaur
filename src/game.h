@@ -67,6 +67,17 @@ typedef struct Obstacle {
 Blob obstacle;
 Blob roofobstacle;
 
+typedef struct Score {
+    int score1;
+    int score2;
+    int score3;
+    char* scorename1;
+    char* scorename2;
+    char* scorename3;
+} Scoreboard;
+
+Scoreboard board;
+
 /* Boolean type definition */
 typedef enum boolean {
     false,
@@ -81,9 +92,6 @@ typedef enum game {
 } game_state;
 
 /* Game state */
-char scorename[3*3];
-int scoreboard[3];
-
 int restarted;
 game_state state;
 bool jump;

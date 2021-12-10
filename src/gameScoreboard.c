@@ -9,25 +9,39 @@
 char ascii = 65;
 int character = 0;
 
-int scoreboard[3] = { 0, 0, 0 };
-char temp_score;
-char score1;
-char score2;
-char score3;
+char temp_name[3];
+Scoreboard board = {
+  .score1 = 0,
+  .score2 = 0,
+  .score3 = 0
+};
 
 /* Inputs the ascii and the number into the arrays for the scoreboard */
 void update_highscore() {
-  if(score > scoreboard[0]) {
-    scoreboard[0] = score;
-    scorename[0] = ascii;
+  int i;
+  if(score > board.score1) {
+    for(i = 0; i < 3; i++) {
+      board.scorename3[i] = board.scorename2[i];
+      board.scorename2[i] = board.scorename1[i];
+      board.scorename1[i] = temp_name[i];
+    }
+    board.score3 = board.score2;
+    board.score2 = board.score1;
+    board.score1 = score;
   }
-  else if(score > scoreboard[1]) {
-    scoreboard[1] = score;
-    scorename[1] = ascii;
+  else if(score > board.score2) {
+    for(i = 0; i < 3; i++) {
+      board.scorename3[i] = board.scorename2[i];
+      board.scorename2[i] = temp_name[i];
+    }
+    board.score3 = board.score1;
+    board.score2 = score;
   }
-  else if(score > scoreboard[2]) {
-    scoreboard[2] = score;
-    scorename[2] = ascii;
+  else if(score > board.score3) {
+    for(i = 0; i < 3; i++) {
+      board.scorename3[i] = temp_name[i];
+    }
+    board.score3 = score;
   }
 }
 
@@ -38,14 +52,14 @@ void game_reset(){
 }
 
 void render_scoreboard() {
-  display_string(20, 1, &scorename[0]);
-  display_string(80, 1, itoaconv(scoreboard[0])); 
+  display_string(20, 1, (char*) temp_name);
+  display_string(80, 1, itoaconv(board.score1)); 
   
-  display_string(20, 2, &scorename[1]);
-  display_string(80, 2, itoaconv(scoreboard[1]));
+  display_string(20, 2, (char*) board.scorename2);
+  display_string(80, 2, itoaconv(board.score2));
   
-  display_string(20, 3, &scorename[2]);
-  display_string(80, 3, itoaconv(scoreboard[2]));
+  display_string(20, 3, (char*) board.scorename3);
+  display_string(80, 3, itoaconv(board.score3));
 }
 
 void render_over() {
@@ -54,10 +68,11 @@ void render_over() {
     display_string(20, 2, "Score:");
     display_string(80, 2, itoaconv(score));
 
-    if(character == 1) {
-      display_string(80, 1, &scorename[0]);
-    } else if(character == 2) {
-      display_string(87, 1, &scorename[1]);
+    if(character >= 1) {
+      display_string(80, 1, &(temp_name[0]));
+    }
+    if(character == 2) {
+      display_string(87, 1, &(temp_name[1]));
     }
 }
 
@@ -66,15 +81,15 @@ void checkButton_scoreboard() {
   if(btns == 0) 
     return; // Return if nothing is registered
   
-  
   if((btns & 0x2) == 2) {
+    temp_name[character] = ascii;
     character++;
-    scorename[character] = ascii;
     ascii = 65;
-    if(character == 2) {
+    if(character == 3) {
       transition();
       update_highscore();
-      state = game_score; 
+      state = game_score;
+      character = 0; 
     }
   }
   if((btns & 0x4) == 4) {
@@ -82,8 +97,8 @@ void checkButton_scoreboard() {
     if(ascii > 90) {
       ascii = 65;
     }
-    delay(200);
   }
+  delay(200);
 }
 
 void checkButton_showingscore() {

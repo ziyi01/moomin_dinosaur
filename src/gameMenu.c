@@ -18,6 +18,6 @@ void checkButton_menu() {
 
 void menu_screen() {
     checkButton_menu();
-    display_string(20, 1, "Press button");
-    display_string(30, 2, "to start!");
+    display_string(25, 1, "Press button");
+    display_string(40, 2, "to start!");
 }

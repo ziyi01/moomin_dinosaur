@@ -18,7 +18,6 @@ int inAir = 0;
 int ducked = 0;
 int ground_move = 0;
 int roof_move = -340;
-int restarted = 0;
 game_state state = 0; // 0 = is menu/start
 bool jump = false;
 bool duck = false;
@@ -179,6 +178,7 @@ int main(void) {
     clear_display();
     switch(state) {
       case 0:
+        delay(20);
         menu_screen();
       break;
       case 1:

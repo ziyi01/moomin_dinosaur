@@ -101,6 +101,49 @@ void display_string(int x, int line, char* string) {
 	}
 }
 
+void display_box(int x, int line) {
+	int box_x;
+	for(box_x = x-1; box_x < (x+6); box_x ++) {
+		display[line*128 + box_x] = 0xFF;
+	}
+}
+
+/* Inverses a string and uses*/
+void inverse_string(int x, int line, char* string) {
+	display_box(x, line);
+
+	const char* i;
+	int j;
+	int k = x;
+	for (i = string; *i!='\0'; i++) {
+		char c = *i;
+		/* Dont draw outside the screen */
+		if(j + k > 128) {
+			continue;
+		}
+		/* Space character */
+		if(c == 32) {
+			k += 4;
+			continue;
+		}
+		/* Display every hex value of a char */
+		for (j = 0; j<5; j++) {
+			/* Capital letters */
+			if(c >= 65 && c <= 90) {
+				display[j + k + line*128] &= ~font[(c - 65)*5 + j];
+			/* Normal letters */
+			} else if(c >= 97 && c <= 122) {
+				display[j + k + line*128] &= ~font[(c - 65 - 32)*5 + j];
+			/* Digits and colon */
+		    } else if(c >= 48 && c <= 58) {
+				display[j + k + line*128] &= ~font[(c - 48 + 26)*5 + j];
+			}
+		}
+		/* Next letter and add space. */
+		k += 7;
+	}
+}
+
 /* Clears the whole display */
 void clear_display() {
 	int i;

@@ -71,9 +71,6 @@ typedef struct Score {
     int score1;
     int score2;
     int score3;
-    char* scorename1;
-    char* scorename2;
-    char* scorename3;
 } Scoreboard;
 
 Scoreboard board;

@@ -101,8 +101,17 @@ void display_string(int x, int line, char* string) {
 	}
 }
 
+void display_box(int x, int line) {
+	int box_x;
+	for(box_x = x-1; box_x < (x+6); box_x ++) {
+		display[line*128 + box_x] = 0xFF;
+	}
+}
+
 /* Inverses a string and uses*/
-void inverse_display(int x, int line, char* string) {
+void inverse_string(int x, int line, char* string) {
+	display_box(x, line);
+
 	const char* i;
 	int j;
 	int k = x;

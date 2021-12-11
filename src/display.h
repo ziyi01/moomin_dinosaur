@@ -17,6 +17,7 @@ extern uint8_t hattifnatt[8];
 /* Declare display-related functions from display */
 void display_init(void);
 void display_string(int x, int line, char *s);
+void display_box(int x, int line);
 void inverse_string(int x, int line, char *s);
 void display_update(void);
 uint8_t spi_send_recv(uint8_t data);

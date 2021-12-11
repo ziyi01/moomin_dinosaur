@@ -178,7 +178,7 @@ int main(void) {
     clear_display();
     switch(state) {
       case 0:
-        delay(20);
+        delay(10);
         menu_screen();
       break;
       case 1:

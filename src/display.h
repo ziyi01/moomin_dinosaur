@@ -13,6 +13,7 @@ uint8_t* moomin;
 extern uint8_t moominstand[2*16];
 extern uint8_t moominduck[2*16];
 extern uint8_t hattifnatt[8];
+extern uint8_t hattifnatt_inverse[8*2];
 
 /* Declare display-related functions from display */
 void display_init(void);

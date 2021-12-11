@@ -38,7 +38,7 @@ void update_highscore() {
       scorename3[i] = scorename2[i];
       scorename2[i] = temp_name[i];
     }
-    board.score3 = board.score1;
+    board.score3 = board.score2;
     board.score2 = score;
   }
   else if(score > board.score3) {
@@ -56,13 +56,13 @@ void game_reset(){
 }
 
 void render_scoreboard() {
-  display_string(20, 1, scorename1);
+  display_string(20, 1, (char*) scorename1);
   display_string(80, 1, itoaconv(board.score1)); 
   
-  display_string(20, 2, scorename2);
+  display_string(20, 2, (char*) scorename2);
   display_string(80, 2, itoaconv(board.score2));
   
-  display_string(20, 3, scorename3);
+  display_string(20, 3, (char*) scorename3);
   display_string(80, 3, itoaconv(board.score3));
 }
 

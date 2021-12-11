@@ -32,7 +32,7 @@ void render_obstacle() {
     int j;
     int yOff2 = roofobstacle.obsY / 8;
     for(j = 0; j < 8; j++) {
-		display[yOff2*128+(roofobstacle.obsX+j)] |= hattifnatt[j];
+		display[yOff2*128+(roofobstacle.obsX+j)] |= hattifnatt_inverse[j];
     }
 }
 

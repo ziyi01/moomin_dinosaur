@@ -18,6 +18,7 @@ int inAir = 0;
 int ducked = 0;
 int ground_move = 0;
 int roof_move = -340;
+int roof_Y = 14;
 game_state state = 0; // 0 = is menu/start
 bool jump = false;
 bool duck = false;
@@ -133,6 +134,16 @@ void move_roof(){
           roofobstacle.obsX = 127;
         }
         roof_move ++;
+
+    if(roof_Y == 50){
+      if(roofobstacle.obsY == 5){
+        roofobstacle.obsY = 12;
+      }else{
+        roofobstacle.obsY = 5;
+      }
+      roof_Y = 0;
+    }
+    roof_Y++;
 }
 
 void collision(){

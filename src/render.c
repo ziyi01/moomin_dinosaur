@@ -3,15 +3,15 @@
     This file written 2021 by Julia Wang & Amanda Hallstedt,
     
     For copyright and licensing, see file COPYING
-
 */
 
+/* Declarations */
 #include <stdint.h>   
 #include <pic32mx.h>  
 #include "game.h"
 #include "display.h"
 
-/* Moomin render-functions*/
+/* Player character render */
 void render_moomintroll() {
     int i, j;
     for (i = 0; i < 2; i++) {
@@ -22,6 +22,17 @@ void render_moomintroll() {
     }
 }
 
+/* Transition screen image */
+void render_cloud(int x, int y) {
+    int i, j;
+    for(i = 0; i < 4; i++) {    
+        for(j = x; j < x + 32; j ++) {
+            display[i*128 + j] |= moomincloud[i*32 + (j-x)];
+        }
+    }
+}
+
+/* Render both types of obstacles */
 void render_obstacle() {
     int i;
     int yOff = obstacle.obsY / 8;
@@ -39,6 +50,7 @@ void render_obstacle() {
     
 }
 
+/* Render the border during game time */
 void render_background() {
     int i, j;
     
@@ -46,11 +58,6 @@ void render_background() {
     for(i = 0; i < 128; i ++) {
         display_pixel(i, 0); // Top 
         display_pixel(i, 31); // Bottom
-
-        // This is for using groundlevel above bottom line
-        /*for(j = groundlvl+1; j < 27; j ++) { // Ground
-            display_pixel(i, j);
-        }*/
     }
 
     /* Vertical lines */
@@ -58,24 +65,15 @@ void render_background() {
         display_pixel(0, j);
         display_pixel(127, j);
     }
-
-    /* Misc. details */
-    // Frame
 }
 
+/* The transition inbetween menus */
 void transition() {
-    int i,j;
-    for(i = 0; i < 126; i ++) {
-        for(j = 0; j < 32; j ++) {
-            clear_pixel(i-1, j);
-            display_pixel(i, j);
-            display_pixel(i+2, j);
-            display_pixel(i+4, j);
-        }
-
-        delay(4);
+    int i;
+    for(i = 0; i < 96; i ++) {
+        render_cloud(i, 0);
         display_update();
+        delay(15);
+        clear_display();
     }
-
-    clear_display();
 }

@@ -20,6 +20,7 @@ void render_obstacle(void);
 void render_background(void);
 void render_scoreboard(void);
 void render_over(void);
+void render_cloud(int x, int y);
 void transition(void);
 
 /* Timer */
@@ -49,8 +50,7 @@ void update_highscore();
 void checkButton_menu(void);
 void menu_screen(void);
 
-/* Type definitions in game*/
-
+/* Type definitions in game */
 typedef struct Moomin {
     int moominX;
     int moominY;
@@ -81,6 +81,7 @@ typedef enum boolean {
     true
 } bool;
 
+/* Game state */
 typedef enum game {
     game_menu,
     game_start,
@@ -88,10 +89,8 @@ typedef enum game {
     game_score
 } game_state;
 
-/* Game state */
 int restarted;
 game_state state;
 bool jump;
 bool duck;
-char ascii;
 int roof_move;

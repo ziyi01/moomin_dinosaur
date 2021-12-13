@@ -119,7 +119,7 @@ void checkButton_showingscore() {
     transition();
     game_reset();
     state = 0;
-    roof_move = -340;
+    roof_move = -480;
   }
 }
 

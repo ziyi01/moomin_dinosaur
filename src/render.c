@@ -29,11 +29,14 @@ void render_obstacle() {
 		display[yOff*128+(obstacle.obsX+i)] |= hattifnatt[i];
     }
 
-    int j;
-    int yOff2 = roofobstacle.obsY / 8;
-    for(j = 0; j < 8; j++) {
-		display[yOff2*128+(roofobstacle.obsX+j)] |= hattifnatt_inverse[j];
-    }
+    
+        int j;
+        int yOff2 = roofobstacle.obsY / 8;
+        for(j = 0; j < 8; j++) {
+            display[yOff2*128+(roofobstacle.obsX+j)] |= hattifnatt_inverse[j];
+        }
+    
+    
 }
 
 void render_background() {

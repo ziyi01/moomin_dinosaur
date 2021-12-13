@@ -17,8 +17,13 @@ int heightlvl = 20;
 int inAir = 0;
 int ducked = 0;
 int ground_move = 0;
-int roof_move = -340;
+int roof_move = -480;
 int roof_Y = 14;
+int obs_time = 12;
+int go_low = 12;
+int speedup_delay = 6;
+int mvmnt = 45;
+int bigmvmnt = 55;
 game_state state = 0; // 0 = is menu/start
 bool jump = false;
 bool duck = false;
@@ -82,18 +87,20 @@ void checkButton() {
   }
 }
 
+
 /*checking jump and making sure moomin stays in the air by basically using
   a counter for how long the boi has been in the air. One could easily switch out
   "40" for a variable like "airTime" and then be able to change it easier*/
 void jumping(){
+  
   if(timeoutcount == 0 && jump) {
-        if (inAir < 40){
+        if (inAir < mvmnt){
           troll.moominY = heightlvl;
         }
-        else if(inAir == 40){
+        else if(inAir == mvmnt){
           troll.moominY = groundlvl;
         }
-        else if(inAir == 50){
+        else if(inAir == bigmvmnt){
           inAir = 0;
           jump = false;
         }
@@ -115,7 +122,7 @@ void ducking(){
 
 //move obstacle, to change speed change the value in first statement 
 void move_ground(){
-        if(ground_move == 6){
+        if(ground_move >= obs_time){
           obstacle.obsX --;
           ground_move = 0;
         }
@@ -126,7 +133,7 @@ void move_ground(){
 }
 
 void move_roof(){
-  if(roof_move == 6){
+  if(roof_move >= obs_time){
           roofobstacle.obsX --;
           roof_move = 0;
         }
@@ -135,22 +142,44 @@ void move_roof(){
         }
         roof_move ++;
 
-    if(roof_Y == 50){
-      if(roofobstacle.obsY == 5){
-        roofobstacle.obsY = 12;
+    if(roof_Y == 60){
+      if(roofobstacle.obsY == 10){
+        roofobstacle.obsY = 16;
       }else{
-        roofobstacle.obsY = 5;
+        roofobstacle.obsY = 10;
       }
       roof_Y = 0;
     }
     roof_Y++;
 }
 
+
 void collision(){
   if(troll.moominX-1 == obstacle.obsX && troll.moominY == obstacle.obsY){
     state = game_over;
   }else if(troll.moominX-1 == roofobstacle.obsX && troll.moominY  != groundlvl){
     state = game_over;
+  }
+}
+
+void speedupobj(){
+  if(speedup_delay == 105){
+     if( score%10 == 0 && obs_time > 5){
+      obs_time -- ;
+    }
+    speedup_delay = 0;
+  }
+ speedup_delay ++;
+}
+
+speedupmoomin(){
+  if(score == 20){
+    mvmnt = 40;
+    bigmvmnt = 48;
+  }
+  if(score == 40){
+    mvmnt = 38;
+    bigmvmnt = 46;
   }
 }
 
@@ -168,13 +197,14 @@ void game_run(){
   render();
   timer();
   checkButton();
-
   move_ground();
   move_roof();
-  collision();
+  //collision();
         
   jumping();
-  ducking();  
+  ducking();
+  speedupobj();
+  speedupmoomin();
 }
 
 int main(void) {

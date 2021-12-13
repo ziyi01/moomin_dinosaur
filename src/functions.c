@@ -1,6 +1,6 @@
 /* functions.c
 
-   This file written 2021-10-01 by Julia Wang
+   This file written 2021 by Julia Wang
 
    For copyright and licensing, see file COPYING */
 
@@ -12,9 +12,7 @@
 /* Interrupt Service Routine */
 void user_isr( void )
 {
-  // TO-DO: IMPLEMENT GAME OVER??
-
-  return;
+  return; // Instantly return for timer to work
 }
 
 /* getbtns()

@@ -1,8 +1,10 @@
 /* display.c
+
    This file written 2021 by Julia Wang
    Some parts are original code written by Axel Isaksson and F Lundevall
 
-   For copyright and licensing, see file COPYING */
+   For copyright and licensing, see file COPYING
+*/
 
 #include <stdint.h>   /* Declarations of uint_32 and the like */
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
@@ -22,7 +24,7 @@
 #define DISPLAY_TURN_OFF_VDD (PORTFSET = 0x40)
 #define DISPLAY_TURN_OFF_VBAT (PORTFSET = 0x20)
 
-#define ARRAY_SIZE sizeof(display) / sizeof(display[0])
+#define ARRAY_SIZE sizeof(display) / sizeof(display[0]) // Display's array size
 
 /* quicksleep:
    A simple function to create a small delay.
@@ -101,6 +103,7 @@ void display_string(int x, int line, char* string) {
 	}
 }
 
+/* Fills a box x-wide and 8 high */
 void display_box(int x, int line) {
 	int box_x;
 	for(box_x = x-1; box_x < (x+6); box_x ++) {
@@ -108,7 +111,7 @@ void display_box(int x, int line) {
 	}
 }
 
-/* Inverses a string and uses*/
+/* Inverses a string to clear specific pixels and display a box around */
 void inverse_string(int x, int line, char* string) {
 	display_box(x, line);
 
@@ -161,7 +164,7 @@ void display_update(void) {
 	return;
 }
 
-/* Initialization */
+/* Initialization of the SPI-protocol and OLED display */
 void display_init(void) {
     DISPLAY_CHANGE_TO_COMMAND_MODE;
 	quicksleep(10);

@@ -3,15 +3,15 @@
     This file written 2021 by Julia Wang & Amanda Hallstedt,
     
     For copyright and licensing, see file COPYING
-
 */
 
+/* Declarations */
 #include <stdint.h>   
 #include <pic32mx.h>  
 #include "game.h"
 #include "display.h"
 
-/* Moomin render-functions*/
+/* Player character render */
 void render_moomintroll() {
     int i, j;
     for (i = 0; i < 2; i++) {
@@ -22,6 +22,17 @@ void render_moomintroll() {
     }
 }
 
+/* Transition screen image */
+void render_cloud(int x, int y) {
+    int i, j;
+    for(i = 0; i < 4; i++) {    
+        for(j = x; j < x + 32; j ++) {
+            display[i*128 + j] |= moomincloud[i*32 + (j-x)];
+        }
+    }
+}
+
+/* Render both types of obstacles */
 void render_obstacle() {
     int i;
     int yOff = obstacle.obsY / 8;
@@ -29,13 +40,19 @@ void render_obstacle() {
 		display[yOff*128+(obstacle.obsX+i)] |= hattifnatt[i];
     }
 
-    int j;
+    int j, h;
     int yOff2 = roofobstacle.obsY / 8;
-    for(j = 0; j < 8; j++) {
-		display[yOff2*128+(roofobstacle.obsX+j)] |= hattifnatt_inverse[j];
+    for(h = 0; h < 2; h++) {
+        if(roofobstacle.obsY < 8) {
+            h++;
+        }   
+        for(j = 0; j < 8; j++) {
+		    display[(yOff2+h)*128+(roofobstacle.obsX+j)] |= hattifnatt_inverse[j+h*8];
+        }
     }
 }
 
+/* Render the border during game time */
 void render_background() {
     int i, j;
     
@@ -52,15 +69,7 @@ void render_background() {
     }
 }
 
-void render_cloud(int x, int y) {
-    int i, j;
-    for(i = 0; i < 4; i++) {    
-        for(j = x; j < x + 32; j ++) {
-            display[i*128 + j] |= moomincloud[i*32 + (j-x)] & 0xFF >> y;
-        }
-    }
-}
-
+/* The transition inbetween menus */
 void transition() {
     int i;
     for(i = 0; i < 96; i ++) {

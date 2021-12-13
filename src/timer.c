@@ -24,24 +24,22 @@ void timer_init() {
     T2CONSET = 0x8000; // Start Timer2
 }
 
-/* Checks if timer has timed out and 1/2 second has passed */
+/*  timer
+    Checks if timer has timed out and 1/2 second has passed. Also increments the game score
+
+*/
 void timer() {
   if(IFS(0) & 0x100) {
     IFS(0) = IFS(0) & ~0x100; // Reset the flag
     timeoutcount++;
   } // Check if interrupted, flag status changed or not
-    
-  if(score < 9999) { // Won't increment further
-    if(timeoutcount == 5) {
-      timeoutcount = 0;
-      IFS(0) = IFS(0) & ~0x100;
-      score++;  // Possibly change PERIOD and PR2 to speed score up
+  
+  if(timeoutcount == 5) { // 10 timeouts are a second
+    if(score < 9999) { // Won't increment further
+      score++; 
     }
-  } else {
-    if(timeoutcount == 5) {
       timeoutcount = 0;
-      IFS(0) = IFS(0) & ~0x100;
-    }
+      IFS(0) = IFS(0) & ~0x100; // Resets the interrupt flag
   }
 }
 

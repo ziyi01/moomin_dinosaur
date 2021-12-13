@@ -18,13 +18,10 @@ int inAir = 0;
 int ducked = 0;
 int ground_move = 0;
 int roof_move = -340;
-int restarted = 0;
 int roof_Y = 14;
 game_state state = 0; // 0 = is menu/start
 bool jump = false;
 bool duck = false;
-
-char ascii = 65;
 
 /*
   Create entities
@@ -61,33 +58,6 @@ void do_duck() {
   }
 }
 
-/* Inputs the ascii and the number into the arrays for the scoreboard */
-void set_score() {
-  if(score > scoreboard[0]) {
-    scoreboard[0] = score;
-    scorename[0] = ascii;
-  }
-  else if(score > scoreboard[1]) {
-    scoreboard[1] = score;
-    scorename[1] = ascii;
-  }
-  else if(score > scoreboard[2]) {
-    scoreboard[2] = score;
-    scorename[2] = ascii;
-  }
-}
-
-void show_scoreboard() {
-  display_string(20, 1, &scorename[0]);
-  display_string(32, 1, itoaconv(scoreboard[0])); 
-  
-  display_string(20, 2, &scorename[1]);
-  display_string(32, 2, itoaconv(scoreboard[1]));
-  
-  display_string(20, 3, &scorename[2]);
-  display_string(32, 3, itoaconv(scoreboard[2]));
-}
-
 /*
   Uses getbtns() and getsw() from time4io to retrieve the status of
   the Switches and Buttons 2-4 to update the time on display.
@@ -110,67 +80,6 @@ void checkButton() {
       do_jump();
     }
   }
-}
-
-void checkButton_menu() {
-  volatile int btns = (volatile int) getbtns();
-  if(btns == 0) { 
-    return; // Return if nothing is registered
-  } else {
-    transition();
-    state = game_start;
-  }
-}
-
-/*
-  Uses getbtns() and getsw() from time4io to retrieve the status of
-  the Switches and Buttons 2-4 to update the time on display.
-*/
-void checkButton_scoreboard() {
-  volatile int btns = (volatile int) getbtns();
-  if(btns == 0) 
-    return; // Return if nothing is registered
-  
-  
-  if((btns & 0x2) == 2) {
-    transition();
-    set_score();
-    state = game_score; 
-    ascii = 65;
-  }
-  if((btns & 0x4) == 4) {
-    ascii ++;
-    if(ascii > 90) {
-      ascii = 65;
-    }
-    delay(100);
-  }
-}
-
-void checkButton_showingscore() {
-  volatile int btns = (volatile int) getbtns();
-  if(btns == 0) { 
-    return; // Return if nothing is registered
-  } else {
-    transition();
-    restarted = 1;
-    state = 0;
-  }
-}
-
-/*
-  Activate render functions
-*/
-void render() {
-  render_background();
-  render_moomintroll();
-  display_string(8, 1, itoaconv(score));
-  render_obstacle();
-}
-
-void game_run(){
-  timer();
-  checkButton();
 }
 
 /*checking jump and making sure moomin stays in the air by basically using
@@ -245,53 +154,52 @@ void collision(){
   }
 }
 
-void game_reset(){
-  obstacle.obsX= 127;
-  roofobstacle.obsX = 120;
-  score = 0;
+/*
+  Activate render functions when game is running
+*/
+void render() {
+  render_background();
+  render_moomintroll();
+  display_string(8, 1, itoaconv(score));
+  render_obstacle();
+}
+
+void game_run(){
+  render();
+  timer();
+  checkButton();
+
+  move_ground();
+  move_roof();
+  collision();
+        
+  jumping();
+  ducking();  
 }
 
 int main(void) {
-	init();
+	/* Run all initialization */
+  init();
 	display_init();
   timer_init();
+
+  /* Game-loop */
 	while( 1 )
 	{
     clear_display();
     switch(state) {
       case 0:
-        checkButton_menu();
-        display_string(20, 1, "Press button");
-        display_string(30, 2, "to start!");
+        delay(10);
+        menu_screen();
       break;
       case 1:
-        if(restarted == 1){
-          restarted = 0;
-          game_reset();
-          roof_move = -340;
-        }
-        render();
         game_run();
-        move_ground();
-        move_roof();
-        collision();
-        
-        jumping();
-        ducking();
-
-
       break;
       case 2:
-        checkButton_scoreboard();
-        display_string(50, 1, "Name:");
-        display_string(90, 1, &ascii);
-        display_string(50, 2, "Score:");
-        display_string(90, 2, itoaconv(score));
+        set_score();
       break;
       case 3:
-        // DISPLAY SCOREBOARD, save ascii in array by comparing score, also save score of course then
-        show_scoreboard(); 
-        checkButton_showingscore();
+        show_score();
       break;
       default:
       display_string(10, 1, "ERROR: STATE");

@@ -13,13 +13,13 @@ void enable_interrupt(void);
 void delay(int);
 void user_isr(void);
 void init(void);
-int rand(int low, int high); // TO-DO: IMPLEMENT RANDOMIZER
 
 /* Declare render and character */
-void render_moomin(void);
+void render_moomintroll(void);
 void render_obstacle(void);
-void clear_moomin(void);
 void render_background(void);
+void render_scoreboard(void);
+void render_over(void);
 void transition(void);
 
 /* Timer */
@@ -30,12 +30,24 @@ extern short timeoutcount;
 extern int score;
 
 /* Declare game-loop related functions */
+// state 1
 void do_jump(void);
 void gravity(void);
 void do_duck(void);
 void render(void);
-void checkButton(void);
 void game_run(void);
+void checkButton(void);
+
+// state 2, 3
+void checkButton_scoreboard(void);
+void checkButton_showingscore(void);
+void set_score(void);
+void show_score(void);
+void update_highscore();
+
+// state 0
+void checkButton_menu(void);
+void menu_screen(void);
 
 /* Type definitions in game*/
 
@@ -55,6 +67,14 @@ typedef struct Obstacle {
 Blob obstacle;
 Blob roofobstacle;
 
+typedef struct Score {
+    int score1;
+    int score2;
+    int score3;
+} Scoreboard;
+
+Scoreboard board;
+
 /* Boolean type definition */
 typedef enum boolean {
     false,
@@ -68,6 +88,10 @@ typedef enum game {
     game_score
 } game_state;
 
-/* Scoreboard & Menu */
-char scorename[3];
-int scoreboard[3];
+/* Game state */
+int restarted;
+game_state state;
+bool jump;
+bool duck;
+char ascii;
+int roof_move;

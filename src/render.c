@@ -22,15 +22,6 @@ void render_moomintroll() {
     }
 }
 
-void render_obstacle2(){
-    int i, j;
-    for (i = obstacle.obsX; i < obstacle.obsX+8; i ++){
-        for(j = obstacle.obsY; j > obstacle.obsY-8; j--){
-            display_pixel(i, j);
-        }
-    }    
-}
-
 void render_obstacle() {
     int i;
     int yOff = obstacle.obsY / 8;
@@ -41,12 +32,8 @@ void render_obstacle() {
     int j;
     int yOff2 = roofobstacle.obsY / 8;
     for(j = 0; j < 8; j++) {
-		display[yOff2*128+(roofobstacle.obsX+j)] |= hattifnatt[j];
+		display[yOff2*128+(roofobstacle.obsX+j)] |= hattifnatt_inverse[j];
     }
-}
-
-void render_menu() {
-
 }
 
 void render_background() {

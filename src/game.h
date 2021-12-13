@@ -20,6 +20,7 @@ void render_obstacle(void);
 void render_background(void);
 void render_scoreboard(void);
 void render_over(void);
+void render_cloud(int x, int y);
 void transition(void);
 
 /* Timer */
@@ -93,5 +94,4 @@ int restarted;
 game_state state;
 bool jump;
 bool duck;
-char ascii;
 int roof_move;

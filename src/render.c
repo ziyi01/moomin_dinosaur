@@ -43,11 +43,6 @@ void render_background() {
     for(i = 0; i < 128; i ++) {
         display_pixel(i, 0); // Top 
         display_pixel(i, 31); // Bottom
-
-        // This is for using groundlevel above bottom line
-        /*for(j = groundlvl+1; j < 27; j ++) { // Ground
-            display_pixel(i, j);
-        }*/
     }
 
     /* Vertical lines */
@@ -55,24 +50,23 @@ void render_background() {
         display_pixel(0, j);
         display_pixel(127, j);
     }
+}
 
-    /* Misc. details */
-    // Frame
+void render_cloud(int x, int y) {
+    int i, j;
+    for(i = 0; i < 4; i++) {    
+        for(j = x; j < x + 32; j ++) {
+            display[i*128 + j] |= moomincloud[i*32 + (j-x)] & 0xFF >> y;
+        }
+    }
 }
 
 void transition() {
-    int i,j;
-    for(i = 0; i < 126; i ++) {
-        for(j = 0; j < 32; j ++) {
-            clear_pixel(i-1, j);
-            display_pixel(i, j);
-            display_pixel(i+2, j);
-            display_pixel(i+4, j);
-        }
-
-        delay(4);
+    int i;
+    for(i = 0; i < 96; i ++) {
+        render_cloud(i, 0);
         display_update();
+        delay(15);
+        clear_display();
     }
-
-    clear_display();
 }

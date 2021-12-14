@@ -11,14 +11,21 @@
 #include "display.h" /* Declarations for the display */
 
 /*  checkButton_menu
-    Checks for any button to start the game
+    Checks for first button to start the game and second button to see scoreboard
 
 */
 void checkButton_menu() {
   volatile int btns = (volatile int) getbtns();
   if(btns == 0) { 
     return; // Return if nothing is registered
-  } else {
+  }
+
+  if((btns & 0x2) == 2) {
+    transition();
+    state = game_score;
+  }
+
+  if((btns & 0x4) == 4) {
     transition();
     state = game_start;
   }
@@ -27,6 +34,6 @@ void checkButton_menu() {
 /* Menu-screen text and check button */
 void menu_screen() {
     checkButton_menu();
-    display_string(25, 1, "Press button");
-    display_string(40, 2, "to start!");
+    display_string(20, 1, "1st - Start");
+    display_string(20, 3, "2nd -Highscore");
 }

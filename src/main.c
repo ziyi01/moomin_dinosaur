@@ -87,7 +87,6 @@ void checkButton() {
   }
 }
 
-
 /*checking jump and making sure moomin stays in the air by basically using
   a counter for how long the boi has been in the air. One could easily switch out
   "40" for a variable like "airTime" and then be able to change it easier*/

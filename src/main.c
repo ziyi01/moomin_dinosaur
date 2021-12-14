@@ -199,7 +199,7 @@ void game_run(){
   checkButton();
   move_ground();
   move_roof();
-  //collision();
+  collision();
         
   jumping();
   ducking();
